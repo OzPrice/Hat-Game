@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>The Hat Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #1a1612;
+            --bg-warm: #2d2520;
+            --paper: #f4ede4;
+            --paper-shadow: #d4cdc4;
+            --ink: #2d2520;
+            --accent: #c45d3a;
+            --accent-glow: #e07a55;
+            --gold: #d4a855;
+            --success: #5a8a6a;
+            --error: #c45d3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(ellipse at 20% 20%, rgba(196, 93, 58, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(212, 168, 85, 0.06) 0%, transparent 50%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--paper);
+            text-align: center;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 0 rgba(196, 93, 58, 0.3);
+        }
+
+        h2 {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: rgba(244, 237, 228, 0.6);
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .hat-container {
+            position: relative;
+            width: 180px;
+            height: 140px;
+            margin: 1.5rem 0 2rem;
+            cursor: pointer;
+        }
+
+        .hat {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hat-brim {
+            width: 180px;
+            height: 25px;
+            background: linear-gradient(180deg, #3d3530 0%, #2a2420 100%);
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .hat-body {
+            width: 120px;
+            height: 90px;
+            background: linear-gradient(135deg, #3d3530 0%, #2a2420 50%, #1a1612 100%);
+            border-radius: 10px 10px 0 0;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            box-shadow: inset 0 -20px 30px rgba(0,0,0,0.3);
+        }
+
+        .hat-band {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 15px;
+            background: linear-gradient(180deg, var(--accent) 0%, #a04d2a 100%);
+            z-index: 1;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: var(--paper);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(196, 93, 58, 0.3);
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 93, 58, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(244, 237, 228, 0.3);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(244, 237, 228, 0.1);
+            border-color: rgba(244, 237, 228, 0.5);
+            box-shadow: none;
+        }
+
+        .player-selector {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .player-count {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--gold);
+            min-width: 80px;
+            text-align: center;
+            font-family: 'Caveat', cursive;
+        }
+
+        .player-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-warm);
+            border: 2px solid rgba(244, 237, 228, 0.2);
+            color: var(--paper);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-btn:hover {
+            background: rgba(244, 237, 228, 0.1);
+            border-color: var(--gold);
+        }
+
+        .input-card {
+            background: var(--paper);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+        }
+
+        .input-card h3 {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-card p {
+            color: rgba(45, 37, 32, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-family: 'Caveat', cursive;
+            border: 2px dashed rgba(45, 37, 32, 0.2);
+            border-radius: 8px;
+            background: rgba(45, 37, 32, 0.03);
+            text-align: center;
+            color: var(--ink);
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+        }
+
+        .input-field::placeholder {
+            color: rgba(45, 37, 32, 0.3);
+        }
+
+        .input-field.error {
+            border-color: var(--error);
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .player-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .player-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(45, 37, 32, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .player-dot.done {
+            background: var(--success);
+        }
+
+        .player-dot.current {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .submit-input {
+            width: 100%;
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            padding: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .submit-input:hover {
+            background: var(--accent);
+        }
+
+        .submit-input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .film-search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .film-input {
+            text-align: left;
+            font-size: 1.2rem;
+        }
+
+        .autocomplete-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+
+        .autocomplete-results.active {
+            display: block;
+        }
+
+        .autocomplete-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border-bottom: 1px solid rgba(45, 37, 32, 0.1);
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover {
+            background: rgba(196, 93, 58, 0.1);
+        }
+
+        .autocomplete-poster {
+            width: 35px;
+            height: 52px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: rgba(45, 37, 32, 0.1);
+        }
+
+        .autocomplete-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .autocomplete-title {
+            font-weight: 600;
+            color: var(--ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .autocomplete-year {
+            font-size: 0.8rem;
+            color: rgba(45, 37, 32, 0.5);
+        }
+
+        .autocomplete-loading, .autocomplete-empty {
+            padding: 1rem;
+            text-align: center;
+            color: rgba(45, 37, 32, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .autocomplete-item.wrong-year {
+            opacity: 0.6;
+        }
+
+        .autocomplete-item.wrong-year .autocomplete-year {
+            color: var(--accent);
+        }
+
+        .selected-film {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(90, 138, 106, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .selected-film-poster {
+            width: 50px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .selected-film-info h4 {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: var(--ink);
+            margin-bottom: 0.25rem;
+        }
+
+        .selected-film-info p {
+            font-size: 0.85rem;
+            color: rgba(45, 37, 32, 0.6);
+            margin: 0;
+        }
+
+        .clear-selection {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+        }
+
+        .draw-area {
+            width: 100%;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .drawn-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            min-height: 80px;
+        }
+
+        .drawn-slip {
+            background: var(--paper);
+            padding: 0.75rem 1.25rem;
+            border-radius: 6px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: var(--ink);
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            transform: rotate(var(--rotation));
+            opacity: 0;
+            animation: slipAppear 0.5s ease-out forwards;
+        }
+
+        .drawn-slip.discarded {
+            opacity: 0.4;
+            text-decoration: line-through;
+            transform: rotate(var(--rotation)) scale(0.9);
+        }
+
+        .drawn-slip.winner {
+            background: linear-gradient(135deg, var(--gold) 0%, #e0b855 100%);
+            color: var(--bg-deep);
+            font-size: 1.8rem;
+            padding: 1rem 2rem;
+            box-shadow: 0 5px 25px rgba(212, 168, 85, 0.5);
+            animation: winnerPop 0.6s ease-out forwards;
+        }
+
+        .drawn-film-slip {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--paper);
+            padding: 0.5rem 1rem 0.5rem 0.5rem;
+            border-radius: 8px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            transform: rotate(var(--rotation));
+            opacity: 0;
+            animation: slipAppear 0.5s ease-out forwards;
+        }
+
+        .drawn-film-slip.discarded {
+            opacity: 0.4;
+            transform: rotate(var(--rotation)) scale(0.9);
+        }
+
+        .drawn-film-slip.discarded .drawn-film-title {
+            text-decoration: line-through;
+        }
+
+        .drawn-film-slip.winner {
+            background: linear-gradient(135deg, var(--gold) 0%, #e0b855 100%);
+            padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+            box-shadow: 0 5px 25px rgba(212, 168, 85, 0.5);
+            animation: winnerPop 0.6s ease-out forwards;
+            transform: rotate(0);
+        }
+
+        .drawn-film-poster {
+            width: 40px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .drawn-film-slip.winner .drawn-film-poster {
+            width: 50px;
+            height: 75px;
+        }
+
+        .drawn-film-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            color: var(--ink);
+        }
+
+        .drawn-film-slip.winner .drawn-film-title {
+            font-size: 1.5rem;
+            color: var(--bg-deep);
+        }
+
+        @keyframes slipAppear {
+            0% { opacity: 0; transform: rotate(var(--rotation)) translateY(-30px) scale(0.8); }
+            100% { opacity: 1; transform: rotate(var(--rotation)) translateY(0) scale(1); }
+        }
+
+        @keyframes winnerPop {
+            0% { opacity: 0; transform: rotate(0) scale(0.5); }
+            50% { transform: rotate(0) scale(1.1); }
+            100% { opacity: 1; transform: rotate(0) scale(1); }
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-deep) 100%);
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(212, 168, 85, 0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+            width: 100%;
+        }
+
+        .result-label {
+            color: var(--gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-year {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--paper);
+            margin-bottom: 1.5rem;
+        }
+
+        .result-poster {
+            width: 150px;
+            height: 225px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            margin-bottom: 1rem;
+        }
+
+        .result-film {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: var(--gold);
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(212, 168, 85, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Streaming Providers */
+        .streaming-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(212, 168, 85, 0.3);
+        }
+
+        .streaming-section h4 {
+            color: var(--paper);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .streaming-providers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .provider-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .provider-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .provider-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            text-decoration: none;
+        }
+
+        .provider-name {
+            font-size: 0.7rem;
+            color: rgba(244, 237, 228, 0.6);
+            max-width: 60px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .no-streaming {
+            color: rgba(244, 237, 228, 0.5);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .justwatch-credit {
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: rgba(244, 237, 228, 0.4);
+        }
+
+        .justwatch-credit a {
+            color: rgba(244, 237, 228, 0.6);
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .pass-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            padding: 2rem;
+        }
+
+        .pass-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .pass-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pass-text {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--paper);
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .pass-subtext {
+            color: rgba(244, 237, 228, 0.5);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hidden { display: none !important; }
+        .mb-2 { margin-bottom: 2rem; }
+
+        .settings-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-warm);
+            border: 1px solid rgba(244, 237, 228, 0.2);
+            color: var(--paper);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        .settings-btn:hover {
+            background: rgba(244, 237, 228, 0.1);
+            border-color: var(--gold);
+        }
+
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 22, 18, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            padding: 1.5rem;
+        }
+
+        .settings-panel.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .settings-card {
+            background: var(--paper);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .settings-card h3 {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-card p {
+            color: rgba(45, 37, 32, 0.6);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .settings-card label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            border: 2px solid rgba(45, 37, 32, 0.2);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .settings-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .settings-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-settings {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-settings:not(.secondary) {
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+        }
+
+        .btn-settings:not(.secondary):hover {
+            background: var(--accent);
+        }
+
+        .btn-settings.secondary {
+            background: transparent;
+            color: var(--ink);
+            border: 2px solid rgba(45, 37, 32, 0.2);
+        }
+
+        .btn-settings.secondary:hover {
+            border-color: var(--ink);
+        }
+
+        .settings-help {
+            font-size: 0.75rem;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .settings-help a {
+            color: var(--accent);
+        }
+
+        .error-hint {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-hint.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <button class="settings-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="screen" id="welcome-screen">
+            <h1>The Hat Game</h1>
+            <p class="subtitle">A better way to choose what film to watch</p>
+            
+            <div class="hat-container">
+                <div class="hat">
+                    <div class="hat-body"></div>
+                    <div class="hat-band"></div>
+                    <div class="hat-brim"></div>
+                </div>
+            </div>
+
+            <h2>How many players?</h2>
+            <div class="player-selector">
+                <button class="player-btn" onclick="adjustPlayers(-1)">−</button>
+                <div class="player-count" id="player-count">4</div>
+                <button class="player-btn" onclick="adjustPlayers(1)">+</button>
+            </div>
+
+            <button class="btn" onclick="startGame()">Start Game</button>
+        </div>
+
+        <!-- Year Input Screen -->
+        <div class="screen" id="year-input-screen">
+            <h2>Round 1: Years</h2>
+            <p class="subtitle">Each player writes a year for the film</p>
+            
+            <div class="input-card">
+                <div class="player-indicator" id="year-dots"></div>
+                <h3>Player <span id="current-year-player">1</span></h3>
+                <p>Enter a year (don't let others see!)</p>
+                <input type="tel" class="input-field" id="year-input" placeholder="e.g. 1994" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+                <div class="error-hint" id="year-error">Please enter a year between 1900 and 2025</div>
+                <button class="submit-input" onclick="submitYear()">Drop in hat</button>
+            </div>
+        </div>
+
+        <!-- Year Draw Screen -->
+        <div class="screen" id="year-draw-screen">
+            <h2>Drawing Years...</h2>
+            <p class="subtitle" id="year-draw-subtitle">Tap the hat to draw</p>
+            
+            <div class="draw-area">
+                <div class="drawn-items" id="drawn-years"></div>
+                
+                <div class="hat-container" id="year-hat" onclick="drawYear()">
+                    <div class="hat">
+                        <div class="hat-body"></div>
+                        <div class="hat-band"></div>
+                        <div class="hat-brim"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Film Input Screen -->
+        <div class="screen" id="film-input-screen">
+            <h2>Round 2: Films</h2>
+            <p class="subtitle">Choose a film from <span id="chosen-year-display" style="color: var(--gold); font-family: 'Caveat', cursive; font-size: 1.5rem;"></span></p>
+            
+            <div class="input-card">
+                <div class="player-indicator" id="film-dots"></div>
+                <h3>Player <span id="current-film-player">1</span></h3>
+                <p>Search for a film from the chosen year</p>
+                
+                <div id="selected-film-container" class="hidden">
+                    <div class="selected-film">
+                        <img id="selected-poster" class="selected-film-poster" src="" alt="">
+                        <div class="selected-film-info">
+                            <h4 id="selected-title"></h4>
+                            <p id="selected-year"></p>
+                        </div>
+                        <button class="clear-selection" onclick="clearSelection()">✕</button>
+                    </div>
+                </div>
+
+                <div id="film-search-container" class="film-search-container">
+                    <input type="text" class="input-field film-input" id="film-input" placeholder="Start typing to search..." autocomplete="off">
+                    <div class="autocomplete-results" id="autocomplete-results"></div>
+                </div>
+
+                <button class="submit-input" id="submit-film-btn" onclick="submitFilm()" disabled>Drop in hat</button>
+            </div>
+        </div>
+
+        <!-- Film Draw Screen -->
+        <div class="screen" id="film-draw-screen">
+            <h2>Drawing Films...</h2>
+            <p class="subtitle" id="film-draw-subtitle">Tap the hat to draw</p>
+            
+            <div class="draw-area">
+                <div class="drawn-items" id="drawn-films"></div>
+                
+                <div class="hat-container" id="film-hat" onclick="drawFilm()">
+                    <div class="hat">
+                        <div class="hat-body"></div>
+                        <div class="hat-band"></div>
+                        <div class="hat-brim"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div class="screen" id="result-screen">
+            <h2>Tonight's Film</h2>
+            
+            <div class="result-card mb-2">
+                <div class="result-label">From</div>
+                <div class="result-year" id="final-year"></div>
+                <img class="result-poster" id="final-poster" src="" alt="">
+                <div class="result-label">You're watching</div>
+                <div class="result-film" id="final-film"></div>
+                
+                <div class="streaming-section" id="streaming-section">
+                    <h4>Where to Watch (UK)</h4>
+                    <div class="streaming-providers" id="streaming-providers">
+                        <span class="no-streaming">Checking availability...</span>
+                    </div>
+                    <div class="justwatch-credit">Streaming data by <a href="https://www.justwatch.com" target="_blank">JustWatch</a></div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="resetGame()">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settings-panel">
+        <div class="settings-card">
+            <h3>Settings</h3>
+            <p>If film search isn't working, you may need to update the API key.</p>
+            <label for="settings-api-key">TMDb API Key</label>
+            <input type="text" class="settings-input" id="settings-api-key" placeholder="Enter API key">
+            <div class="settings-buttons">
+                <button class="btn-settings" onclick="saveSettings()">Save</button>
+                <button class="btn-settings secondary" onclick="toggleSettings()">Cancel</button>
+            </div>
+            <p class="settings-help">Get a free key at <a href="https://www.themoviedb.org/settings/api" target="_blank">themoviedb.org</a></p>
+        </div>
+    </div>
+
+    <!-- Pass Phone Overlay -->
+    <div class="pass-overlay" id="pass-overlay">
+        <div class="pass-icon">📱</div>
+        <div class="pass-text">Pass to Player <span id="pass-player-num">2</span></div>
+        <div class="pass-subtext">Hand the phone to the next player</div>
+        <button class="btn" onclick="hidePassOverlay()">I'm Ready</button>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas class="confetti" id="confetti"></canvas>
+
+    <script>
+        // TMDb Configuration
+        const TMDB_BASE = 'https://api.themoviedb.org/3';
+        const TMDB_IMG = 'https://image.tmdb.org/t/p/w185';
+        const TMDB_IMG_LARGE = 'https://image.tmdb.org/t/p/w342';
+        const DEFAULT_API_KEY = '7e2803684f61390a73098d014c9c302b';
+        let API_KEY = localStorage.getItem('hatgame_api_key') || DEFAULT_API_KEY;
+
+        // Game State
+        let playerCount = 4;
+        let years = [];
+        let films = [];
+        let currentPlayer = 1;
+        let chosenYear = null;
+        let chosenFilm = null;
+        let yearDrawIndex = 0;
+        let filmDrawIndex = 0;
+        let selectedFilm = null;
+        let searchTimeout = null;
+
+        const screens = {
+            welcome: document.getElementById('welcome-screen'),
+            yearInput: document.getElementById('year-input-screen'),
+            yearDraw: document.getElementById('year-draw-screen'),
+            filmInput: document.getElementById('film-input-screen'),
+            filmDraw: document.getElementById('film-draw-screen'),
+            result: document.getElementById('result-screen')
+        };
+
+        // Initialize
+        function init() {
+            showScreen('welcome');
+
+            const filmInput = document.getElementById('film-input');
+            filmInput.addEventListener('input', handleFilmSearch);
+            filmInput.addEventListener('focus', () => {
+                if (filmInput.value.length >= 2) {
+                    document.getElementById('autocomplete-results').classList.add('active');
+                }
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.film-search-container')) {
+                    document.getElementById('autocomplete-results').classList.remove('active');
+                }
+            });
+        }
+
+        // Utility Functions
+        function showScreen(screenName) {
+            Object.values(screens).forEach(s => s.classList.remove('active'));
+            screens[screenName].classList.add('active');
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function getRandomRotation() {
+            return (Math.random() - 0.5) * 10;
+        }
+
+        // Player Count
+        function adjustPlayers(delta) {
+            playerCount = Math.max(2, Math.min(10, playerCount + delta));
+            document.getElementById('player-count').textContent = playerCount;
+        }
+
+        // Start Game
+        function startGame() {
+            years = [];
+            films = [];
+            currentPlayer = 1;
+            chosenYear = null;
+            chosenFilm = null;
+            yearDrawIndex = 0;
+            filmDrawIndex = 0;
+
+            setupYearInput();
+            showScreen('yearInput');
+        }
+
+        // Year Input Phase
+        function setupYearInput() {
+            const dotsContainer = document.getElementById('year-dots');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < playerCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'player-dot' + (i === 0 ? ' current' : '');
+                dotsContainer.appendChild(dot);
+            }
+            document.getElementById('current-year-player').textContent = '1';
+            document.getElementById('year-input').value = '';
+            document.getElementById('year-error').classList.remove('visible');
+        }
+
+        function submitYear() {
+            const input = document.getElementById('year-input');
+            const errorHint = document.getElementById('year-error');
+            const yearValue = input.value.trim();
+            const year = parseInt(yearValue, 10);
+            const currentYear = new Date().getFullYear();
+            
+            console.log('Submitting year:', yearValue, 'parsed:', year);
+            
+            if (!yearValue || isNaN(year) || year < 1900 || year > currentYear) {
+                input.classList.add('error');
+                errorHint.classList.add('visible');
+                setTimeout(() => {
+                    input.classList.remove('error');
+                }, 500);
+                return;
+            }
+
+            errorHint.classList.remove('visible');
+            years.push(yearValue);
+            
+            const dots = document.querySelectorAll('#year-dots .player-dot');
+            dots[currentPlayer - 1].classList.remove('current');
+            dots[currentPlayer - 1].classList.add('done');
+
+            if (currentPlayer < playerCount) {
+                currentPlayer++;
+                showPassOverlay(currentPlayer);
+            } else {
+                years = shuffleArray(years);
+                setupYearDraw();
+                showScreen('yearDraw');
+            }
+        }
+
+        function showPassOverlay(playerNum) {
+            document.getElementById('pass-player-num').textContent = playerNum;
+            document.getElementById('pass-overlay').classList.add('active');
+        }
+
+        function hidePassOverlay() {
+            document.getElementById('pass-overlay').classList.remove('active');
+            
+            const dots = document.querySelectorAll('#year-dots .player-dot, #film-dots .player-dot');
+            if (dots[currentPlayer - 1]) {
+                dots[currentPlayer - 1].classList.add('current');
+            }
+            
+            if (screens.yearInput.classList.contains('active')) {
+                document.getElementById('current-year-player').textContent = currentPlayer;
+                document.getElementById('year-input').value = '';
+                document.getElementById('year-error').classList.remove('visible');
+                document.getElementById('year-input').focus();
+            }
+            
+            if (screens.filmInput.classList.contains('active')) {
+                document.getElementById('current-film-player').textContent = currentPlayer;
+                clearSelection();
+                document.getElementById('film-input').focus();
+            }
+        }
+
+        // Year Draw Phase
+        function setupYearDraw() {
+            document.getElementById('drawn-years').innerHTML = '';
+            document.getElementById('year-draw-subtitle').textContent = 'Tap the hat to draw';
+            document.getElementById('year-hat').style.pointerEvents = 'auto';
+            yearDrawIndex = 0;
+        }
+
+        function drawYear() {
+            if (yearDrawIndex >= years.length) return;
+
+            const container = document.getElementById('drawn-years');
+            const year = years[yearDrawIndex];
+            const isLast = yearDrawIndex === years.length - 1;
+
+            const slip = document.createElement('div');
+            slip.className = 'drawn-slip' + (isLast ? ' winner' : '');
+            slip.style.setProperty('--rotation', getRandomRotation() + 'deg');
+            slip.textContent = year;
+            container.appendChild(slip);
+
+            if (!isLast) {
+                setTimeout(() => slip.classList.add('discarded'), 400);
+            }
+
+            yearDrawIndex++;
+
+            if (isLast) {
+                chosenYear = year;
+                document.getElementById('year-draw-subtitle').textContent = 'The year is ' + year + '!';
+                document.getElementById('year-hat').style.pointerEvents = 'none';
+                
+                setTimeout(() => {
+                    setupFilmInput();
+                    showScreen('filmInput');
+                }, 2000);
+            }
+        }
+
+        // Film Search
+        async function searchFilms(query, year) {
+            try {
+                const url = `${TMDB_BASE}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`;
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('API error:', response.status, errorData);
+                    throw new Error(errorData.status_message || `API returned ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.results) {
+                    return [];
+                }
+                
+                // Filter to films from the chosen year
+                const yearFilms = data.results.filter(m => {
+                    if (!m.release_date) return false;
+                    const releaseYear = m.release_date.split('-')[0];
+                    return releaseYear === year;
+                });
+                
+                // If we found films from that exact year, return them
+                if (yearFilms.length > 0) {
+                    return yearFilms.slice(0, 10);
+                }
+                
+                // Otherwise, show all results
+                return data.results.slice(0, 10);
+            } catch (error) {
+                console.error('Search error:', error);
+                throw error; // Re-throw so the handler can show appropriate message
+            }
+        }
+
+        function handleFilmSearch(e) {
+            const query = e.target.value.trim();
+            const resultsContainer = document.getElementById('autocomplete-results');
+
+            if (query.length < 2) {
+                resultsContainer.classList.remove('active');
+                return;
+            }
+
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(async () => {
+                resultsContainer.innerHTML = '<div class="autocomplete-loading">Searching...</div>';
+                resultsContainer.classList.add('active');
+
+                try {
+                    const results = await searchFilms(query, chosenYear);
+
+                    if (results.length === 0) {
+                        resultsContainer.innerHTML = `<div class="autocomplete-empty">No films found matching "${query}"<br><small>Try a different search term</small></div>`;
+                        return;
+                    }
+
+                    resultsContainer.innerHTML = results.map(movie => {
+                        const movieYear = movie.release_date?.split('-')[0] || '?';
+                        const isWrongYear = movieYear !== chosenYear;
+                        return `
+                        <div class="autocomplete-item ${isWrongYear ? 'wrong-year' : ''}" onclick='selectFilm(${JSON.stringify(movie).replace(/'/g, "&#39;")})'>
+                            <img class="autocomplete-poster" 
+                                 src="${movie.poster_path ? TMDB_IMG + movie.poster_path : ''}" 
+                                 alt=""
+                                 onerror="this.style.display='none'">
+                            <div class="autocomplete-info">
+                                <div class="autocomplete-title">${movie.title}</div>
+                                <div class="autocomplete-year">${movieYear}${isWrongYear ? ' ⚠️' : ''}</div>
+                            </div>
+                        </div>
+                    `}).join('');
+                } catch (error) {
+                    console.error('Search handler error:', error);
+                    let errorMsg = 'Search failed.';
+                    if (error.message.includes('Failed to fetch')) {
+                        errorMsg = 'Connection blocked.<br><small>Try opening this page via a web server, or check ⚙️ settings.</small>';
+                    } else if (error.message.includes('Invalid API key')) {
+                        errorMsg = 'Invalid API key.<br><small>Tap ⚙️ to update it.</small>';
+                    }
+                    resultsContainer.innerHTML = `<div class="autocomplete-empty">${errorMsg}</div>`;
+                }
+            }, 300);
+        }
+
+        function selectFilm(movie) {
+            const movieYear = movie.release_date?.split('-')[0];
+            const isWrongYear = movieYear !== chosenYear;
+            
+            selectedFilm = {
+                id: movie.id,
+                title: movie.title,
+                year: movieYear,
+                poster: movie.poster_path ? TMDB_IMG + movie.poster_path : null,
+                posterLarge: movie.poster_path ? TMDB_IMG_LARGE + movie.poster_path : null
+            };
+
+            document.getElementById('selected-title').textContent = movie.title;
+            document.getElementById('selected-year').textContent = movieYear + (isWrongYear ? ' (not from ' + chosenYear + ')' : '');
+            document.getElementById('selected-poster').src = selectedFilm.poster || '';
+            document.getElementById('selected-poster').style.display = selectedFilm.poster ? 'block' : 'none';
+
+            document.getElementById('selected-film-container').classList.remove('hidden');
+            document.getElementById('film-search-container').classList.add('hidden');
+            document.getElementById('autocomplete-results').classList.remove('active');
+            document.getElementById('submit-film-btn').disabled = false;
+        }
+
+        function clearSelection() {
+            selectedFilm = null;
+            document.getElementById('selected-film-container').classList.add('hidden');
+            document.getElementById('film-search-container').classList.remove('hidden');
+            document.getElementById('film-input').value = '';
+            document.getElementById('submit-film-btn').disabled = true;
+        }
+
+        // Film Input Phase
+        function setupFilmInput() {
+            currentPlayer = 1;
+            document.getElementById('chosen-year-display').textContent = chosenYear;
+            
+            const dotsContainer = document.getElementById('film-dots');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < playerCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'player-dot' + (i === 0 ? ' current' : '');
+                dotsContainer.appendChild(dot);
+            }
+            document.getElementById('current-film-player').textContent = '1';
+            clearSelection();
+        }
+
+        function submitFilm() {
+            if (!selectedFilm) return;
+
+            films.push(selectedFilm);
+            
+            const dots = document.querySelectorAll('#film-dots .player-dot');
+            dots[currentPlayer - 1].classList.remove('current');
+            dots[currentPlayer - 1].classList.add('done');
+
+            if (currentPlayer < playerCount) {
+                currentPlayer++;
+                showPassOverlay(currentPlayer);
+            } else {
+                films = shuffleArray(films);
+                setupFilmDraw();
+                showScreen('filmDraw');
+            }
+        }
+
+        // Film Draw Phase
+        function setupFilmDraw() {
+            document.getElementById('drawn-films').innerHTML = '';
+            document.getElementById('film-draw-subtitle').textContent = 'Tap the hat to draw';
+            document.getElementById('film-hat').style.pointerEvents = 'auto';
+            filmDrawIndex = 0;
+        }
+
+        function drawFilm() {
+            if (filmDrawIndex >= films.length) return;
+
+            const container = document.getElementById('drawn-films');
+            const film = films[filmDrawIndex];
+            const isLast = filmDrawIndex === films.length - 1;
+
+            const slip = document.createElement('div');
+            slip.className = 'drawn-film-slip' + (isLast ? ' winner' : '');
+            slip.style.setProperty('--rotation', getRandomRotation() + 'deg');
+            slip.innerHTML = `
+                ${film.poster ? `<img class="drawn-film-poster" src="${film.poster}" alt="">` : ''}
+                <span class="drawn-film-title">${film.title}</span>
+            `;
+            container.appendChild(slip);
+
+            if (!isLast) {
+                setTimeout(() => slip.classList.add('discarded'), 400);
+            }
+
+            filmDrawIndex++;
+
+            if (isLast) {
+                chosenFilm = film;
+                document.getElementById('film-draw-subtitle').textContent = "You're watching " + film.title + '!';
+                document.getElementById('film-hat').style.pointerEvents = 'none';
+                
+                setTimeout(() => showResult(), 2000);
+            }
+        }
+
+        // Fetch Streaming Providers
+        async function fetchStreamingProviders(movieId) {
+            try {
+                const response = await fetch(
+                    `${TMDB_BASE}/movie/${movieId}/watch/providers?api_key=${API_KEY}`
+                );
+                const data = await response.json();
+                // Get UK providers (GB), fall back to US if not available
+                return data.results?.GB || data.results?.US || null;
+            } catch (error) {
+                console.error('Streaming providers error:', error);
+                return null;
+            }
+        }
+
+        // Result
+        async function showResult() {
+            document.getElementById('final-year').textContent = chosenYear;
+            document.getElementById('final-film').textContent = chosenFilm.title;
+            
+            const poster = document.getElementById('final-poster');
+            if (chosenFilm.posterLarge) {
+                poster.src = chosenFilm.posterLarge;
+                poster.style.display = 'block';
+            } else {
+                poster.style.display = 'none';
+            }
+            
+            showScreen('result');
+            launchConfetti();
+
+            // Fetch streaming providers
+            const providersContainer = document.getElementById('streaming-providers');
+            providersContainer.innerHTML = '<span class="no-streaming">Checking availability...</span>';
+
+            const providers = await fetchStreamingProviders(chosenFilm.id);
+            
+            if (providers) {
+                const allProviders = [
+                    ...(providers.flatrate || []),  // Subscription
+                    ...(providers.rent || []),       // Rent
+                    ...(providers.buy || [])         // Buy
+                ];
+                
+                // Remove duplicates by provider_id
+                const uniqueProviders = allProviders.filter((provider, index, self) =>
+                    index === self.findIndex(p => p.provider_id === provider.provider_id)
+                ).slice(0, 8);
+
+                if (uniqueProviders.length > 0) {
+                    providersContainer.innerHTML = uniqueProviders.map(provider => `
+                        <div class="provider-link">
+                            <img class="provider-logo" 
+                                 src="https://image.tmdb.org/t/p/original${provider.logo_path}" 
+                                 alt="${provider.provider_name}"
+                                 title="${provider.provider_name}">
+                            <span class="provider-name">${provider.provider_name}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    providersContainer.innerHTML = '<span class="no-streaming">No streaming options found</span>';
+                }
+            } else {
+                providersContainer.innerHTML = '<span class="no-streaming">Streaming info unavailable</span>';
+            }
+        }
+
+        function resetGame() {
+            showScreen('welcome');
+        }
+
+        // Confetti Effect
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const pieces = [];
+            const colors = ['#c45d3a', '#d4a855', '#5a8a6a', '#f4ede4', '#e07a55'];
+
+            for (let i = 0; i < 100; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: -20 - Math.random() * 100,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 3 + 2,
+                    angle: Math.random() * Math.PI * 2,
+                    spin: (Math.random() - 0.5) * 0.2,
+                    wobble: Math.random() * 10
+                });
+            }
+
+            let frame = 0;
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                let active = false;
+                pieces.forEach(p => {
+                    if (p.y < canvas.height + 20) {
+                        active = true;
+                        p.y += p.speed;
+                        p.x += Math.sin(frame * 0.05 + p.wobble) * 0.5;
+                        p.angle += p.spin;
+
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate(p.angle);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                        ctx.restore();
+                    }
+                });
+
+                frame++;
+                if (active) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            animate();
+        }
+
+        // Keyboard support - only submit if valid input exists
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Stop any default form behavior
+                
+                if (screens.yearInput.classList.contains('active')) {
+                    const yearInput = document.getElementById('year-input');
+                    const yearValue = yearInput.value.trim();
+                    const year = parseInt(yearValue, 10);
+                    // Only submit if we have a valid 4-digit year
+                    if (yearValue.length === 4 && !isNaN(year) && year >= 1900 && year <= new Date().getFullYear()) {
+                        submitYear();
+                    }
+                } else if (screens.filmInput.classList.contains('active') && selectedFilm) {
+                    submitFilm();
+                }
+            }
+        });
+
+        // Settings
+        function toggleSettings() {
+            const panel = document.getElementById('settings-panel');
+            const input = document.getElementById('settings-api-key');
+            
+            if (panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            } else {
+                input.value = API_KEY;
+                panel.classList.add('active');
+            }
+        }
+
+        function saveSettings() {
+            const input = document.getElementById('settings-api-key');
+            const newKey = input.value.trim();
+            
+            if (newKey) {
+                API_KEY = newKey;
+                localStorage.setItem('hatgame_api_key', newKey);
+            } else {
+                // Reset to default
+                API_KEY = DEFAULT_API_KEY;
+                localStorage.removeItem('hatgame_api_key');
+            }
+            
+            toggleSettings();
+            alert('API key saved! Try searching for a film to test it.');
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
