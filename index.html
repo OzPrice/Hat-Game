@@ -97,8 +97,14 @@
             position: relative;
             width: 180px;
             height: 140px;
-            margin: 1.5rem 0 2rem;
+            margin: 1rem 0 1.5rem;
             cursor: pointer;
+        }
+
+        .hat-container.small {
+            width: 120px;
+            height: 95px;
+            margin: 0.5rem 0;
         }
 
         .hat {
@@ -118,6 +124,11 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
+        .small .hat-brim {
+            width: 120px;
+            height: 17px;
+        }
+
         .hat-body {
             width: 120px;
             height: 90px;
@@ -131,6 +142,12 @@
             box-shadow: inset 0 -20px 30px rgba(0,0,0,0.3);
         }
 
+        .small .hat-body {
+            width: 80px;
+            height: 60px;
+            bottom: 10px;
+        }
+
         .hat-band {
             position: absolute;
             bottom: 70px;
@@ -140,6 +157,70 @@
             height: 15px;
             background: linear-gradient(180deg, var(--accent) 0%, #a04d2a 100%);
             z-index: 1;
+        }
+
+        .small .hat-band {
+            bottom: 47px;
+            width: 80px;
+            height: 10px;
+        }
+
+        /* Mode Selection Cards */
+        .mode-cards {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mode-card {
+            background: rgba(244, 237, 228, 0.05);
+            border: 1px solid rgba(244, 237, 228, 0.1);
+            border-radius: 16px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-card:hover {
+            background: rgba(244, 237, 228, 0.08);
+            border-color: rgba(244, 237, 228, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .mode-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mode-icon {
+            font-size: 1.5rem;
+        }
+
+        .mode-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            color: var(--paper);
+        }
+
+        .mode-description {
+            color: rgba(244, 237, 228, 0.5);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-left: 2.25rem;
+        }
+
+        .mode-card.highlight {
+            border-color: var(--accent);
+            background: rgba(196, 93, 58, 0.1);
+        }
+
+        .mode-card.highlight:hover {
+            background: rgba(196, 93, 58, 0.15);
+            border-color: var(--accent-glow);
         }
 
         .btn {
@@ -160,11 +241,6 @@
         .btn:hover {
             background: var(--accent-glow);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(196, 93, 58, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
         }
 
         .btn:disabled {
@@ -182,51 +258,38 @@
         .btn-secondary:hover {
             background: rgba(244, 237, 228, 0.1);
             border-color: rgba(244, 237, 228, 0.5);
-            box-shadow: none;
         }
 
-        .player-selector {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+        .btn-small {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
         }
 
-        .player-count {
-            font-size: 4rem;
-            font-weight: 700;
-            color: var(--gold);
-            min-width: 80px;
-            text-align: center;
+        /* Room code display */
+        .room-code {
             font-family: 'Caveat', cursive;
+            font-size: 4rem;
+            color: var(--gold);
+            letter-spacing: 0.5rem;
+            text-align: center;
+            margin: 1rem 0;
+            text-shadow: 0 2px 10px rgba(212, 168, 85, 0.3);
         }
 
-        .player-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--bg-warm);
-            border: 2px solid rgba(244, 237, 228, 0.2);
-            color: var(--paper);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .room-code-label {
+            color: rgba(244, 237, 228, 0.5);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .player-btn:hover {
-            background: rgba(244, 237, 228, 0.1);
-            border-color: var(--gold);
-        }
-
+        /* Input styles */
         .input-card {
             background: var(--paper);
             border-radius: 12px;
             padding: 2rem;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
         }
@@ -273,43 +336,14 @@
             background: white;
         }
 
-        .input-field::placeholder {
-            color: rgba(45, 37, 32, 0.3);
+        .input-field.small {
+            font-size: 1.2rem;
+            text-align: left;
         }
 
-        .input-field.error {
-            border-color: var(--error);
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .player-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .player-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(45, 37, 32, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .player-dot.done {
-            background: var(--success);
-        }
-
-        .player-dot.current {
-            background: var(--accent);
-            transform: scale(1.3);
+        .input-field.room-input {
+            letter-spacing: 0.5rem;
+            text-transform: uppercase;
         }
 
         .submit-input {
@@ -336,40 +370,134 @@
             cursor: not-allowed;
         }
 
-        .random-film-btn {
+        /* Players list */
+        .players-list {
             width: 100%;
+            margin: 1.5rem 0;
+        }
+
+        .player-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             padding: 0.75rem 1rem;
-            margin-top: 0.75rem;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--ink);
-            background: rgba(45, 37, 32, 0.05);
-            border: 2px dashed rgba(45, 37, 32, 0.2);
+            background: rgba(244, 237, 228, 0.05);
             border-radius: 8px;
+            margin-bottom: 0.5rem;
+            color: var(--paper);
+        }
+
+        .player-item.you {
+            background: rgba(196, 93, 58, 0.2);
+            border: 1px solid rgba(196, 93, 58, 0.3);
+        }
+
+        .player-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .player-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .player-status {
+            font-size: 0.8rem;
+            color: rgba(244, 237, 228, 0.5);
+        }
+
+        .player-status.ready {
+            color: var(--success);
+        }
+
+        .player-status.host {
+            color: var(--gold);
+        }
+
+        /* Waiting state */
+        .waiting-text {
+            color: rgba(244, 237, 228, 0.6);
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* Player count selector (local mode) */
+        .player-select {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .player-count-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(244, 237, 228, 0.2);
+            background: transparent;
+            color: var(--paper);
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .random-film-btn:hover {
-            background: rgba(196, 93, 58, 0.1);
+        .player-count-btn:hover, .player-count-btn.selected {
             border-color: var(--accent);
-            color: var(--accent);
+            background: rgba(196, 93, 58, 0.2);
         }
 
-        .random-film-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        /* Pass phone overlay */
+        .pass-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            padding: 2rem;
+            text-align: center;
         }
 
+        .pass-overlay h2 {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: var(--paper);
+            margin-bottom: 1rem;
+        }
+
+        .pass-overlay p {
+            color: rgba(244, 237, 228, 0.6);
+            margin-bottom: 2rem;
+        }
+
+        .pass-overlay .btn {
+            min-width: 200px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Film search */
         .film-search-container {
             position: relative;
             width: 100%;
-        }
-
-        .film-input {
-            text-align: left;
-            font-size: 1.2rem;
         }
 
         .autocomplete-results {
@@ -398,10 +526,6 @@
             cursor: pointer;
             transition: background 0.15s ease;
             border-bottom: 1px solid rgba(45, 37, 32, 0.1);
-        }
-
-        .autocomplete-item:last-child {
-            border-bottom: none;
         }
 
         .autocomplete-item:hover {
@@ -441,14 +565,6 @@
             font-size: 0.9rem;
         }
 
-        .autocomplete-item.wrong-year {
-            opacity: 0.6;
-        }
-
-        .autocomplete-item.wrong-year .autocomplete-year {
-            color: var(--accent);
-        }
-
         .selected-film {
             display: flex;
             align-items: center;
@@ -465,19 +581,16 @@
             height: 75px;
             object-fit: cover;
             border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .selected-film-info h4 {
             font-family: 'Caveat', cursive;
             font-size: 1.4rem;
             color: var(--ink);
-            margin-bottom: 0.25rem;
         }
 
         .selected-film-info p {
             font-size: 0.85rem;
-            color: rgba(45, 37, 32, 0.6);
             margin: 0;
         }
 
@@ -491,6 +604,27 @@
             padding: 0.5rem;
         }
 
+        .random-film-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-top: 0.75rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--ink);
+            background: rgba(45, 37, 32, 0.05);
+            border: 2px dashed rgba(45, 37, 32, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .random-film-btn:hover {
+            background: rgba(196, 93, 58, 0.1);
+            border-color: var(--accent);
+        }
+
+        /* Draw screen */
         .draw-area {
             width: 100%;
             min-height: 300px;
@@ -498,7 +632,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         .drawn-items {
@@ -556,10 +689,6 @@
             transform: rotate(var(--rotation)) scale(0.9);
         }
 
-        .drawn-film-slip.discarded .drawn-film-title {
-            text-decoration: line-through;
-        }
-
         .drawn-film-slip.winner {
             background: linear-gradient(135deg, var(--gold) 0%, #e0b855 100%);
             padding: 0.75rem 1.5rem 0.75rem 0.75rem;
@@ -573,11 +702,6 @@
             height: 60px;
             object-fit: cover;
             border-radius: 4px;
-        }
-
-        .drawn-film-slip.winner .drawn-film-poster {
-            width: 50px;
-            height: 75px;
         }
 
         .drawn-film-title {
@@ -602,14 +726,16 @@
             100% { opacity: 1; transform: rotate(0) scale(1); }
         }
 
+        /* Result */
         .result-card {
             background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-deep) 100%);
             border: 2px solid var(--gold);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 0 60px rgba(212, 168, 85, 0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 0 60px rgba(212, 168, 85, 0.2);
             width: 100%;
+            margin-bottom: 1.5rem;
         }
 
         .result-label {
@@ -624,7 +750,7 @@
             font-family: 'Caveat', cursive;
             font-size: 2rem;
             color: var(--paper);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .result-poster {
@@ -641,11 +767,8 @@
             font-size: 2.5rem;
             color: var(--gold);
             line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(212, 168, 85, 0.3);
-            margin-bottom: 1.5rem;
         }
 
-        /* Streaming Providers */
         .streaming-section {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -674,35 +797,11 @@
             border-radius: 10px;
             object-fit: cover;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease;
-        }
-
-        .provider-logo:hover {
-            transform: scale(1.1);
-        }
-
-        .provider-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            text-decoration: none;
-        }
-
-        .provider-name {
-            font-size: 0.7rem;
-            color: rgba(244, 237, 228, 0.6);
-            max-width: 60px;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .no-streaming {
             color: rgba(244, 237, 228, 0.5);
             font-size: 0.9rem;
-            font-style: italic;
         }
 
         .justwatch-credit {
@@ -715,6 +814,7 @@
             color: rgba(244, 237, 228, 0.6);
         }
 
+        /* Confetti */
         .confetti {
             position: fixed;
             top: 0;
@@ -725,183 +825,7 @@
             z-index: 100;
         }
 
-        .pass-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg-deep);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            padding: 2rem;
-        }
-
-        .pass-overlay.active {
-            display: flex;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .pass-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .pass-text {
-            font-family: 'Caveat', cursive;
-            font-size: 2rem;
-            color: var(--paper);
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .pass-subtext {
-            color: rgba(244, 237, 228, 0.5);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .hidden { display: none !important; }
-        .mb-2 { margin-bottom: 2rem; }
-
-        .settings-btn {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            background: var(--bg-warm);
-            border: 1px solid rgba(244, 237, 228, 0.2);
-            color: var(--paper);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            z-index: 10;
-            transition: all 0.2s ease;
-        }
-
-        .settings-btn:hover {
-            background: rgba(244, 237, 228, 0.1);
-            border-color: var(--gold);
-        }
-
-        .settings-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(26, 22, 18, 0.95);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 60;
-            padding: 1.5rem;
-        }
-
-        .settings-panel.active {
-            display: flex;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .settings-card {
-            background: var(--paper);
-            border-radius: 12px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 350px;
-        }
-
-        .settings-card h3 {
-            font-family: 'Caveat', cursive;
-            font-size: 1.8rem;
-            color: var(--ink);
-            margin-bottom: 0.5rem;
-        }
-
-        .settings-card p {
-            color: rgba(45, 37, 32, 0.6);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-
-        .settings-card label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--ink);
-            margin-bottom: 0.5rem;
-        }
-
-        .settings-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
-            font-family: 'DM Sans', sans-serif;
-            border: 2px solid rgba(45, 37, 32, 0.2);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .settings-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .settings-buttons {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .btn-settings {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-settings:not(.secondary) {
-            background: var(--ink);
-            color: var(--paper);
-            border: none;
-        }
-
-        .btn-settings:not(.secondary):hover {
-            background: var(--accent);
-        }
-
-        .btn-settings.secondary {
-            background: transparent;
-            color: var(--ink);
-            border: 2px solid rgba(45, 37, 32, 0.2);
-        }
-
-        .btn-settings.secondary:hover {
-            border-color: var(--ink);
-        }
-
-        .settings-help {
-            font-size: 0.75rem;
-            text-align: center;
-            margin-bottom: 0;
-        }
-
-        .settings-help a {
-            color: var(--accent);
-        }
-
+        /* Error */
         .error-hint {
             color: var(--error);
             font-size: 0.8rem;
@@ -915,15 +839,13 @@
     </style>
 </head>
 <body>
-    <button class="settings-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
-
     <div class="container">
-        <!-- Welcome Screen -->
-        <div class="screen" id="welcome-screen">
+        <!-- Home Screen -->
+        <div class="screen active" id="screen-home">
             <h1>The Hat Game</h1>
-            <p class="subtitle">A better way to choose what film to watch</p>
+            <p class="subtitle">A film picker for game nights</p>
             
-            <div class="hat-container">
+            <div class="hat-container small">
                 <div class="hat">
                     <div class="hat-body"></div>
                     <div class="hat-band"></div>
@@ -931,40 +853,67 @@
                 </div>
             </div>
 
-            <h2>How many players?</h2>
-            <div class="player-selector">
-                <button class="player-btn" onclick="adjustPlayers(-1)">−</button>
-                <div class="player-count" id="player-count">4</div>
-                <button class="player-btn" onclick="adjustPlayers(1)">+</button>
-            </div>
+            <div class="mode-cards">
+                <div class="mode-card highlight" onclick="startLocalSetup()">
+                    <div class="mode-card-header">
+                        <span class="mode-icon">📱</span>
+                        <span class="mode-title">Pass the Phone</span>
+                    </div>
+                    <p class="mode-description">One device, pass it around. Works offline!</p>
+                </div>
 
-            <button class="btn" onclick="startGame()">Start Game</button>
+                <div class="mode-card" onclick="createOnlineGame()">
+                    <div class="mode-card-header">
+                        <span class="mode-icon">🌐</span>
+                        <span class="mode-title">Create Online Game</span>
+                    </div>
+                    <p class="mode-description">Get a room code for friends to join on their own phones</p>
+                </div>
+
+                <div class="mode-card" onclick="showScreen('screen-join')">
+                    <div class="mode-card-header">
+                        <span class="mode-icon">🔗</span>
+                        <span class="mode-title">Join Online Game</span>
+                    </div>
+                    <p class="mode-description">Enter a room code to join a friend's game</p>
+                </div>
+            </div>
         </div>
 
-        <!-- Year Input Screen -->
-        <div class="screen" id="year-input-screen">
+        <!-- LOCAL MODE: Player Count -->
+        <div class="screen" id="screen-local-setup">
+            <h2>Pass the Phone</h2>
+            <p class="subtitle">How many players?</p>
+            
+            <div class="player-select" id="player-select"></div>
+            
+            <button class="btn" id="start-local-btn" onclick="startLocalGame()" disabled>Let's Go</button>
+            <button class="btn btn-secondary btn-small" onclick="showScreen('screen-home')">Back</button>
+        </div>
+
+        <!-- LOCAL MODE: Year Input -->
+        <div class="screen" id="screen-local-year">
             <h2>Round 1: Years</h2>
-            <p class="subtitle">Each player writes a year for the film</p>
+            <p class="subtitle">Player <span id="local-year-player-num">1</span> of <span id="local-year-total">4</span></p>
             
             <div class="input-card">
-                <div class="player-indicator" id="year-dots"></div>
-                <h3>Player <span id="current-year-player">1</span></h3>
-                <p>Enter a year (don't let others see!)</p>
-                <input type="tel" class="input-field" id="year-input" placeholder="e.g. 1994" maxlength="4" inputmode="numeric" pattern="[0-9]*">
-                <div class="error-hint" id="year-error">Please enter a year between 1900 and 2025</div>
-                <button class="submit-input" onclick="submitYear()">Drop in hat</button>
+                <h3>Enter a Year</h3>
+                <p>Any year a film was released (keep it secret!)</p>
+                <input type="tel" class="input-field" id="local-year-input" placeholder="e.g. 1994" maxlength="4" inputmode="numeric">
+                <div class="error-hint" id="local-year-error">Please enter a year between 1900 and 2025</div>
+                <button class="submit-input" onclick="submitLocalYear()">Drop in Hat</button>
             </div>
         </div>
 
-        <!-- Year Draw Screen -->
-        <div class="screen" id="year-draw-screen">
-            <h2>Drawing Years...</h2>
-            <p class="subtitle" id="year-draw-subtitle">Tap the hat to draw</p>
+        <!-- LOCAL MODE: Year Draw -->
+        <div class="screen" id="screen-local-year-draw">
+            <h2>Drawing the Year...</h2>
+            <p class="subtitle" id="local-year-draw-subtitle">Tap the hat to draw</p>
             
             <div class="draw-area">
-                <div class="drawn-items" id="drawn-years"></div>
+                <div class="drawn-items" id="local-drawn-years"></div>
                 
-                <div class="hat-container" id="year-hat" onclick="drawYear()">
+                <div class="hat-container" id="local-year-hat" onclick="drawLocalYear()">
                     <div class="hat">
                         <div class="hat-body"></div>
                         <div class="hat-band"></div>
@@ -974,47 +923,43 @@
             </div>
         </div>
 
-        <!-- Film Input Screen -->
-        <div class="screen" id="film-input-screen">
+        <!-- LOCAL MODE: Film Input -->
+        <div class="screen" id="screen-local-film">
             <h2>Round 2: Films</h2>
-            <p class="subtitle">Choose a film from <span id="chosen-year-display" style="color: var(--gold); font-family: 'Caveat', cursive; font-size: 1.5rem;"></span></p>
+            <p class="subtitle">Player <span id="local-film-player-num">1</span> — Pick a film from <span id="local-chosen-year" style="color: var(--gold); font-family: 'Caveat', cursive; font-size: 1.3rem;"></span></p>
             
             <div class="input-card">
-                <div class="player-indicator" id="film-dots"></div>
-                <h3>Player <span id="current-film-player">1</span></h3>
-                <p>Search for a film from the chosen year</p>
-                
-                <div id="selected-film-container" class="hidden">
+                <div id="local-selected-film-container" class="hidden">
                     <div class="selected-film">
-                        <img id="selected-poster" class="selected-film-poster" src="" alt="">
+                        <img id="local-selected-poster" class="selected-film-poster" src="" alt="">
                         <div class="selected-film-info">
-                            <h4 id="selected-title"></h4>
-                            <p id="selected-year"></p>
+                            <h4 id="local-selected-title"></h4>
+                            <p id="local-selected-year"></p>
                         </div>
-                        <button class="clear-selection" onclick="clearSelection()">✕</button>
+                        <button class="clear-selection" onclick="clearLocalSelection()">✕</button>
                     </div>
                 </div>
 
-                <div id="film-search-container" class="film-search-container">
-                    <input type="text" class="input-field film-input" id="film-input" placeholder="Start typing to search..." autocomplete="off">
-                    <div class="autocomplete-results" id="autocomplete-results"></div>
+                <div id="local-film-search-container" class="film-search-container">
+                    <input type="text" class="input-field small" id="local-film-input" placeholder="Search for a film..." autocomplete="off">
+                    <div class="autocomplete-results" id="local-autocomplete-results"></div>
                 </div>
 
-                <button class="random-film-btn" onclick="getRandomFilm()">🎲 Pick a random film from <span id="random-year-display"></span></button>
+                <button class="random-film-btn" id="local-random-btn" onclick="getLocalRandomFilm()">🎲 Pick a random film</button>
 
-                <button class="submit-input" id="submit-film-btn" onclick="submitFilm()" disabled>Drop in hat</button>
+                <button class="submit-input" id="local-submit-film-btn" onclick="submitLocalFilm()" disabled>Drop in Hat</button>
             </div>
         </div>
 
-        <!-- Film Draw Screen -->
-        <div class="screen" id="film-draw-screen">
-            <h2>Drawing Films...</h2>
-            <p class="subtitle" id="film-draw-subtitle">Tap the hat to draw</p>
+        <!-- LOCAL MODE: Film Draw -->
+        <div class="screen" id="screen-local-film-draw">
+            <h2>Drawing the Film...</h2>
+            <p class="subtitle" id="local-film-draw-subtitle">Tap the hat to draw</p>
             
             <div class="draw-area">
-                <div class="drawn-items" id="drawn-films"></div>
+                <div class="drawn-items" id="local-drawn-films"></div>
                 
-                <div class="hat-container" id="film-hat" onclick="drawFilm()">
+                <div class="hat-container" id="local-film-hat" onclick="drawLocalFilm()">
                     <div class="hat">
                         <div class="hat-body"></div>
                         <div class="hat-band"></div>
@@ -1024,11 +969,151 @@
             </div>
         </div>
 
-        <!-- Result Screen -->
-        <div class="screen" id="result-screen">
+        <!-- ONLINE MODE: Join Screen -->
+        <div class="screen" id="screen-join">
+            <h2>Join Game</h2>
+            <p class="subtitle">Enter the room code</p>
+
+            <div class="input-card">
+                <input type="text" class="input-field room-input" id="join-code-input" placeholder="ABCD" maxlength="4" autocomplete="off">
+                <input type="text" class="input-field small" id="join-name-input" placeholder="Your name" style="margin-top: 1rem;" autocomplete="off">
+                <div class="error-hint" id="join-error"></div>
+                <button class="submit-input" onclick="joinOnlineGame()">Join</button>
+            </div>
+
+            <button class="btn btn-secondary btn-small" onclick="showScreen('screen-home')" style="margin-top: 1rem;">Back</button>
+        </div>
+
+        <!-- ONLINE MODE: Lobby -->
+        <div class="screen" id="screen-lobby">
+            <h2>Game Lobby</h2>
+            <div class="room-code-label">Room Code</div>
+            <div class="room-code" id="lobby-room-code">ABCD</div>
+            <p class="subtitle">Share this code with your friends</p>
+
+            <div class="players-list" id="players-list"></div>
+
+            <p class="waiting-text" id="waiting-text">Waiting for players...</p>
+
+            <button class="btn" id="start-game-btn" onclick="startOnlineGame()" disabled>Start Game</button>
+            <button class="btn btn-secondary btn-small" onclick="leaveOnlineGame()">Leave</button>
+        </div>
+
+        <!-- ONLINE MODE: Year Input -->
+        <div class="screen" id="screen-online-year">
+            <h2>Round 1: Years</h2>
+            <p class="subtitle">Enter a year for the film</p>
+            
+            <div class="input-card">
+                <h3>Your Turn</h3>
+                <p>Enter a year (keep it secret!)</p>
+                <input type="tel" class="input-field" id="online-year-input" placeholder="e.g. 1994" maxlength="4" inputmode="numeric">
+                <div class="error-hint" id="online-year-error">Please enter a year between 1900 and 2025</div>
+                <button class="submit-input" onclick="submitOnlineYear()">Drop in Hat</button>
+            </div>
+        </div>
+
+        <!-- ONLINE MODE: Year Waiting -->
+        <div class="screen" id="screen-online-year-wait">
+            <h2>Year Submitted!</h2>
+            <div class="hat-container small">
+                <div class="hat">
+                    <div class="hat-body"></div>
+                    <div class="hat-band"></div>
+                    <div class="hat-brim"></div>
+                </div>
+            </div>
+            <p class="waiting-text">Waiting for others...</p>
+            <div class="players-list" id="year-players-status"></div>
+        </div>
+
+        <!-- ONLINE MODE: Year Draw -->
+        <div class="screen" id="screen-online-year-draw">
+            <h2>Drawing Years...</h2>
+            <p class="subtitle" id="online-year-draw-subtitle">Tap the hat to draw</p>
+            
+            <div class="draw-area">
+                <div class="drawn-items" id="online-drawn-years"></div>
+                
+                <div class="hat-container" id="online-year-hat" onclick="drawOnlineYear()">
+                    <div class="hat">
+                        <div class="hat-body"></div>
+                        <div class="hat-band"></div>
+                        <div class="hat-brim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="waiting-text hidden" id="online-year-draw-waiting">Host is drawing...</p>
+        </div>
+
+        <!-- ONLINE MODE: Film Input -->
+        <div class="screen" id="screen-online-film">
+            <h2>Round 2: Films</h2>
+            <p class="subtitle">Choose a film from <span id="online-chosen-year" style="color: var(--gold); font-family: 'Caveat', cursive; font-size: 1.5rem;"></span></p>
+            
+            <div class="input-card">
+                <div id="online-selected-film-container" class="hidden">
+                    <div class="selected-film">
+                        <img id="online-selected-poster" class="selected-film-poster" src="" alt="">
+                        <div class="selected-film-info">
+                            <h4 id="online-selected-title"></h4>
+                            <p id="online-selected-year"></p>
+                        </div>
+                        <button class="clear-selection" onclick="clearOnlineSelection()">✕</button>
+                    </div>
+                </div>
+
+                <div id="online-film-search-container" class="film-search-container">
+                    <input type="text" class="input-field small" id="online-film-input" placeholder="Search for a film..." autocomplete="off">
+                    <div class="autocomplete-results" id="online-autocomplete-results"></div>
+                </div>
+
+                <button class="random-film-btn" id="online-random-btn" onclick="getOnlineRandomFilm()">🎲 Pick a random film</button>
+
+                <button class="submit-input" id="online-submit-film-btn" onclick="submitOnlineFilm()" disabled>Drop in Hat</button>
+            </div>
+        </div>
+
+        <!-- ONLINE MODE: Film Waiting -->
+        <div class="screen" id="screen-online-film-wait">
+            <h2>Film Submitted!</h2>
+            <div class="hat-container small">
+                <div class="hat">
+                    <div class="hat-body"></div>
+                    <div class="hat-band"></div>
+                    <div class="hat-brim"></div>
+                </div>
+            </div>
+            <p class="waiting-text">Waiting for others...</p>
+            <div class="players-list" id="film-players-status"></div>
+        </div>
+
+        <!-- ONLINE MODE: Film Draw -->
+        <div class="screen" id="screen-online-film-draw">
+            <h2>Drawing Films...</h2>
+            <p class="subtitle" id="online-film-draw-subtitle">Tap the hat to draw</p>
+            
+            <div class="draw-area">
+                <div class="drawn-items" id="online-drawn-films"></div>
+                
+                <div class="hat-container" id="online-film-hat" onclick="drawOnlineFilm()">
+                    <div class="hat">
+                        <div class="hat-body"></div>
+                        <div class="hat-band"></div>
+                        <div class="hat-brim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="waiting-text hidden" id="online-film-draw-waiting">Host is drawing...</p>
+        </div>
+
+        <!-- SHARED: Result Screen -->
+        <div class="screen" id="screen-result">
             <h2>Tonight's Film</h2>
             
-            <div class="result-card mb-2">
+            <div class="result-card">
                 <div class="result-label">From</div>
                 <div class="result-year" id="final-year"></div>
                 <img class="result-poster" id="final-poster" src="" alt="">
@@ -1038,218 +1123,193 @@
                 <div class="streaming-section" id="streaming-section">
                     <h4>Where to Watch (UK)</h4>
                     <div class="streaming-providers" id="streaming-providers">
-                        <span class="no-streaming">Checking availability...</span>
+                        <span class="no-streaming">Checking...</span>
                     </div>
-                    <div class="justwatch-credit">Streaming data by <a href="https://www.justwatch.com" target="_blank">JustWatch</a></div>
+                    <div class="justwatch-credit">Data by <a href="https://www.justwatch.com" target="_blank">JustWatch</a></div>
                 </div>
             </div>
 
-            <button class="btn" onclick="resetGame()">Play Again</button>
+            <button class="btn" onclick="playAgain()">Play Again</button>
+            <button class="btn btn-secondary btn-small" onclick="exitGame()">Exit</button>
         </div>
     </div>
 
-    <!-- Settings Panel -->
-    <div class="settings-panel" id="settings-panel">
-        <div class="settings-card">
-            <h3>Settings</h3>
-            <p>If film search isn't working, you may need to update the API key.</p>
-            <label for="settings-api-key">TMDb API Key</label>
-            <input type="text" class="settings-input" id="settings-api-key" placeholder="Enter API key">
-            <div class="settings-buttons">
-                <button class="btn-settings" onclick="saveSettings()">Save</button>
-                <button class="btn-settings secondary" onclick="toggleSettings()">Cancel</button>
-            </div>
-            <p class="settings-help">Get a free key at <a href="https://www.themoviedb.org/settings/api" target="_blank">themoviedb.org</a></p>
-        </div>
+    <!-- Pass Phone Overlay (Local Mode) -->
+    <div class="pass-overlay hidden" id="pass-overlay">
+        <h2 id="pass-title">Pass to Player 2</h2>
+        <p id="pass-subtitle">Don't peek!</p>
+        <button class="btn" onclick="dismissPassOverlay()">I'm Ready</button>
     </div>
 
-    <!-- Pass Phone Overlay -->
-    <div class="pass-overlay" id="pass-overlay">
-        <div class="pass-icon">📱</div>
-        <div class="pass-text">Pass to Player <span id="pass-player-num">2</span></div>
-        <div class="pass-subtext">Hand the phone to the next player</div>
-        <button class="btn" onclick="hidePassOverlay()">I'm Ready</button>
-    </div>
-
-    <!-- Confetti Canvas -->
     <canvas class="confetti" id="confetti"></canvas>
 
+    <!-- Firebase SDK (only loaded for online mode) -->
     <script>
-        // TMDb Configuration
+        let firebaseLoaded = false;
+        let db = null;
+
+        async function loadFirebase() {
+            if (firebaseLoaded) return;
+            
+            await new Promise((resolve, reject) => {
+                const script1 = document.createElement('script');
+                script1.src = 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js';
+                script1.onload = () => {
+                    const script2 = document.createElement('script');
+                    script2.src = 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js';
+                    script2.onload = resolve;
+                    script2.onerror = reject;
+                    document.head.appendChild(script2);
+                };
+                script1.onerror = reject;
+                document.head.appendChild(script1);
+            });
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyCveaGYdYk4CC7wKdiYJ3J6VN_Ja_S0bPw",
+                authDomain: "the-hat-game-multiplayer.firebaseapp.com",
+                databaseURL: "https://the-hat-game-multiplayer-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "the-hat-game-multiplayer",
+                storageBucket: "the-hat-game-multiplayer.firebasestorage.app",
+                messagingSenderId: "1047905293277",
+                appId: "1:1047905293277:web:a7a1dee3d48e5512e1dc34"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+            firebaseLoaded = true;
+        }
+    </script>
+
+    <script>
+        // ==================== SHARED CONFIG ====================
         const TMDB_BASE = 'https://api.themoviedb.org/3';
         const TMDB_IMG = 'https://image.tmdb.org/t/p/w185';
         const TMDB_IMG_LARGE = 'https://image.tmdb.org/t/p/w342';
-        const DEFAULT_API_KEY = '7e2803684f61390a73098d014c9c302b';
-        let API_KEY = localStorage.getItem('hatgame_api_key') || DEFAULT_API_KEY;
+        const TMDB_API_KEY = '7e2803684f61390a73098d014c9c302b';
 
-        // Game State
-        let playerCount = 4;
-        let years = [];
-        let films = [];
-        let currentPlayer = 1;
-        let chosenYear = null;
-        let chosenFilm = null;
-        let yearDrawIndex = 0;
-        let filmDrawIndex = 0;
-        let selectedFilm = null;
+        let gameMode = null; // 'local' or 'online'
         let searchTimeout = null;
 
-        const screens = {
-            welcome: document.getElementById('welcome-screen'),
-            yearInput: document.getElementById('year-input-screen'),
-            yearDraw: document.getElementById('year-draw-screen'),
-            filmInput: document.getElementById('film-input-screen'),
-            filmDraw: document.getElementById('film-draw-screen'),
-            result: document.getElementById('result-screen')
+        // ==================== SCREEN MANAGEMENT ====================
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // ==================== LOCAL MODE STATE ====================
+        let localState = {
+            playerCount: 0,
+            currentPlayer: 0,
+            years: [],
+            films: [],
+            chosenYear: null,
+            chosenFilm: null,
+            selectedFilm: null,
+            yearDrawIndex: 0,
+            filmDrawIndex: 0,
+            shuffledYears: [],
+            shuffledFilms: []
         };
 
-        // Initialize
-        function init() {
-            showScreen('welcome');
-
-            const filmInput = document.getElementById('film-input');
-            filmInput.addEventListener('input', handleFilmSearch);
-            filmInput.addEventListener('focus', () => {
-                if (filmInput.value.length >= 2) {
-                    document.getElementById('autocomplete-results').classList.add('active');
-                }
-            });
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.film-search-container')) {
-                    document.getElementById('autocomplete-results').classList.remove('active');
-                }
-            });
-        }
-
-        // Utility Functions
-        function showScreen(screenName) {
-            Object.values(screens).forEach(s => s.classList.remove('active'));
-            screens[screenName].classList.add('active');
-        }
-
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        // ==================== LOCAL MODE FUNCTIONS ====================
+        function startLocalSetup() {
+            gameMode = 'local';
+            
+            // Build player count buttons
+            const container = document.getElementById('player-select');
+            container.innerHTML = '';
+            for (let i = 2; i <= 10; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'player-count-btn';
+                btn.textContent = i;
+                btn.onclick = () => selectLocalPlayerCount(i);
+                container.appendChild(btn);
             }
-            return shuffled;
+            
+            showScreen('screen-local-setup');
         }
 
-        function getRandomRotation() {
-            return (Math.random() - 0.5) * 10;
+        function selectLocalPlayerCount(count) {
+            localState.playerCount = count;
+            document.querySelectorAll('.player-count-btn').forEach(btn => {
+                btn.classList.toggle('selected', parseInt(btn.textContent) === count);
+            });
+            document.getElementById('start-local-btn').disabled = false;
         }
 
-        // Player Count
-        function adjustPlayers(delta) {
-            playerCount = Math.max(2, Math.min(10, playerCount + delta));
-            document.getElementById('player-count').textContent = playerCount;
+        function startLocalGame() {
+            localState.currentPlayer = 1;
+            localState.years = [];
+            localState.films = [];
+            localState.chosenYear = null;
+            localState.chosenFilm = null;
+            localState.selectedFilm = null;
+            localState.yearDrawIndex = 0;
+            localState.filmDrawIndex = 0;
+            
+            showPassOverlay(`Player 1`, 'Enter your year when ready');
         }
 
-        // Start Game
-        function startGame() {
-            years = [];
-            films = [];
-            currentPlayer = 1;
-            chosenYear = null;
-            chosenFilm = null;
-            yearDrawIndex = 0;
-            filmDrawIndex = 0;
-
-            setupYearInput();
-            showScreen('yearInput');
+        function showPassOverlay(title, subtitle) {
+            document.getElementById('pass-title').textContent = title;
+            document.getElementById('pass-subtitle').textContent = subtitle;
+            document.getElementById('pass-overlay').classList.remove('hidden');
         }
 
-        // Year Input Phase
-        function setupYearInput() {
-            const dotsContainer = document.getElementById('year-dots');
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < playerCount; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'player-dot' + (i === 0 ? ' current' : '');
-                dotsContainer.appendChild(dot);
+        function dismissPassOverlay() {
+            document.getElementById('pass-overlay').classList.add('hidden');
+            
+            if (localState.chosenYear === null) {
+                // Year input phase
+                document.getElementById('local-year-player-num').textContent = localState.currentPlayer;
+                document.getElementById('local-year-total').textContent = localState.playerCount;
+                document.getElementById('local-year-input').value = '';
+                document.getElementById('local-year-error').classList.remove('visible');
+                showScreen('screen-local-year');
+                document.getElementById('local-year-input').focus();
+            } else {
+                // Film input phase
+                document.getElementById('local-film-player-num').textContent = localState.currentPlayer;
+                document.getElementById('local-chosen-year').textContent = localState.chosenYear;
+                clearLocalSelection();
+                showScreen('screen-local-film');
             }
-            document.getElementById('current-year-player').textContent = '1';
-            document.getElementById('year-input').value = '';
-            document.getElementById('year-error').classList.remove('visible');
         }
 
-        function submitYear() {
-            const input = document.getElementById('year-input');
-            const errorHint = document.getElementById('year-error');
+        function submitLocalYear() {
+            const input = document.getElementById('local-year-input');
             const yearValue = input.value.trim();
             const year = parseInt(yearValue, 10);
             const currentYear = new Date().getFullYear();
-            
-            console.log('Submitting year:', yearValue, 'parsed:', year);
-            
-            if (!yearValue || isNaN(year) || year < 1900 || year > currentYear) {
-                input.classList.add('error');
-                errorHint.classList.add('visible');
-                setTimeout(() => {
-                    input.classList.remove('error');
-                }, 500);
+
+            if (!yearValue || yearValue.length !== 4 || isNaN(year) || year < 1900 || year > currentYear) {
+                document.getElementById('local-year-error').classList.add('visible');
                 return;
             }
 
-            errorHint.classList.remove('visible');
-            years.push(yearValue);
-            
-            const dots = document.querySelectorAll('#year-dots .player-dot');
-            dots[currentPlayer - 1].classList.remove('current');
-            dots[currentPlayer - 1].classList.add('done');
+            document.getElementById('local-year-error').classList.remove('visible');
+            localState.years.push(yearValue);
 
-            if (currentPlayer < playerCount) {
-                currentPlayer++;
-                showPassOverlay(currentPlayer);
+            if (localState.currentPlayer < localState.playerCount) {
+                localState.currentPlayer++;
+                showPassOverlay(`Player ${localState.currentPlayer}`, 'Enter your year when ready');
             } else {
-                years = shuffleArray(years);
-                setupYearDraw();
-                showScreen('yearDraw');
+                // All years collected, start draw
+                localState.shuffledYears = shuffleArray([...localState.years]);
+                document.getElementById('local-drawn-years').innerHTML = '';
+                document.getElementById('local-year-hat').style.display = 'block';
+                document.getElementById('local-year-draw-subtitle').textContent = 'Tap the hat to draw';
+                showScreen('screen-local-year-draw');
             }
         }
 
-        function showPassOverlay(playerNum) {
-            document.getElementById('pass-player-num').textContent = playerNum;
-            document.getElementById('pass-overlay').classList.add('active');
-        }
+        function drawLocalYear() {
+            if (localState.yearDrawIndex >= localState.shuffledYears.length) return;
 
-        function hidePassOverlay() {
-            document.getElementById('pass-overlay').classList.remove('active');
-            
-            const dots = document.querySelectorAll('#year-dots .player-dot, #film-dots .player-dot');
-            if (dots[currentPlayer - 1]) {
-                dots[currentPlayer - 1].classList.add('current');
-            }
-            
-            if (screens.yearInput.classList.contains('active')) {
-                document.getElementById('current-year-player').textContent = currentPlayer;
-                document.getElementById('year-input').value = '';
-                document.getElementById('year-error').classList.remove('visible');
-                document.getElementById('year-input').focus();
-            }
-            
-            if (screens.filmInput.classList.contains('active')) {
-                document.getElementById('current-film-player').textContent = currentPlayer;
-                clearSelection();
-                document.getElementById('film-input').focus();
-            }
-        }
-
-        // Year Draw Phase
-        function setupYearDraw() {
-            document.getElementById('drawn-years').innerHTML = '';
-            document.getElementById('year-draw-subtitle').textContent = 'Tap the hat to draw';
-            document.getElementById('year-hat').style.pointerEvents = 'auto';
-            yearDrawIndex = 0;
-        }
-
-        function drawYear() {
-            if (yearDrawIndex >= years.length) return;
-
-            const container = document.getElementById('drawn-years');
-            const year = years[yearDrawIndex];
-            const isLast = yearDrawIndex === years.length - 1;
+            const container = document.getElementById('local-drawn-years');
+            const year = localState.shuffledYears[localState.yearDrawIndex];
+            const isLast = localState.yearDrawIndex === localState.shuffledYears.length - 1;
 
             const slip = document.createElement('div');
             slip.className = 'drawn-slip' + (isLast ? ' winner' : '');
@@ -1257,237 +1317,101 @@
             slip.textContent = year;
             container.appendChild(slip);
 
+            // Mark previous slips as discarded
             if (!isLast) {
                 setTimeout(() => slip.classList.add('discarded'), 400);
             }
 
-            yearDrawIndex++;
+            localState.yearDrawIndex++;
 
             if (isLast) {
-                chosenYear = year;
-                document.getElementById('year-draw-subtitle').textContent = 'The year is ' + year + '!';
-                document.getElementById('year-hat').style.pointerEvents = 'none';
-                
+                localState.chosenYear = year;
+                document.getElementById('local-year-hat').style.display = 'none';
+                document.getElementById('local-year-draw-subtitle').textContent = `The year is ${year}!`;
+
                 setTimeout(() => {
-                    setupFilmInput();
-                    showScreen('filmInput');
+                    localState.currentPlayer = 1;
+                    showPassOverlay(`Player 1`, `Pick a film from ${localState.chosenYear}`);
                 }, 2000);
             }
         }
 
-        // Film Search
-        async function searchFilms(query, year) {
-            try {
-                const url = `${TMDB_BASE}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`;
-                
-                const response = await fetch(url);
-                
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    console.error('API error:', response.status, errorData);
-                    throw new Error(errorData.status_message || `API returned ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                if (!data.results) {
-                    return [];
-                }
-                
-                // Filter to films from the chosen year
-                const yearFilms = data.results.filter(m => {
-                    if (!m.release_date) return false;
-                    const releaseYear = m.release_date.split('-')[0];
-                    return releaseYear === year;
-                });
-                
-                // If we found films from that exact year, return them
-                if (yearFilms.length > 0) {
-                    return yearFilms.slice(0, 10);
-                }
-                
-                // Otherwise, show all results
-                return data.results.slice(0, 10);
-            } catch (error) {
-                console.error('Search error:', error);
-                throw error; // Re-throw so the handler can show appropriate message
-            }
-        }
+        // Film search for local mode
+        document.getElementById('local-film-input').addEventListener('input', function(e) {
+            handleFilmSearch(e.target.value, 'local-autocomplete-results', localState.chosenYear, selectLocalFilm);
+        });
 
-        // Get a random popular film from the chosen year
-        async function getRandomFilm() {
-            const btn = document.querySelector('.random-film-btn');
-            const originalText = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '🎲 Finding a film...';
-            
-            try {
-                // Get a random page (1-5) of popular films from that year
-                const randomPage = Math.floor(Math.random() * 5) + 1;
-                const url = `${TMDB_BASE}/discover/movie?api_key=${API_KEY}&primary_release_year=${chosenYear}&sort_by=popularity.desc&page=${randomPage}`;
-                
-                const response = await fetch(url);
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch films');
-                }
-                
-                const data = await response.json();
-                
-                if (!data.results || data.results.length === 0) {
-                    alert('No films found for ' + chosenYear + '. Try searching manually.');
-                    return;
-                }
-                
-                // Pick a random film from the results
-                const randomIndex = Math.floor(Math.random() * data.results.length);
-                const randomMovie = data.results[randomIndex];
-                
-                // Select it
-                selectFilm(randomMovie);
-                
-            } catch (error) {
-                console.error('Random film error:', error);
-                alert('Could not fetch a random film. Try searching manually.');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-            }
-        }
-
-        function handleFilmSearch(e) {
-            const query = e.target.value.trim();
-            const resultsContainer = document.getElementById('autocomplete-results');
-
-            if (query.length < 2) {
-                resultsContainer.classList.remove('active');
-                return;
-            }
-
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(async () => {
-                resultsContainer.innerHTML = '<div class="autocomplete-loading">Searching...</div>';
-                resultsContainer.classList.add('active');
-
-                try {
-                    const results = await searchFilms(query, chosenYear);
-
-                    if (results.length === 0) {
-                        resultsContainer.innerHTML = `<div class="autocomplete-empty">No films found matching "${query}"<br><small>Try a different search term</small></div>`;
-                        return;
-                    }
-
-                    resultsContainer.innerHTML = results.map(movie => {
-                        const movieYear = movie.release_date?.split('-')[0] || '?';
-                        const isWrongYear = movieYear !== chosenYear;
-                        return `
-                        <div class="autocomplete-item ${isWrongYear ? 'wrong-year' : ''}" onclick='selectFilm(${JSON.stringify(movie).replace(/'/g, "&#39;")})'>
-                            <img class="autocomplete-poster" 
-                                 src="${movie.poster_path ? TMDB_IMG + movie.poster_path : ''}" 
-                                 alt=""
-                                 onerror="this.style.display='none'">
-                            <div class="autocomplete-info">
-                                <div class="autocomplete-title">${movie.title}</div>
-                                <div class="autocomplete-year">${movieYear}${isWrongYear ? ' ⚠️' : ''}</div>
-                            </div>
-                        </div>
-                    `}).join('');
-                } catch (error) {
-                    console.error('Search handler error:', error);
-                    let errorMsg = 'Search failed.';
-                    if (error.message.includes('Failed to fetch')) {
-                        errorMsg = 'Connection blocked.<br><small>Try opening this page via a web server, or check ⚙️ settings.</small>';
-                    } else if (error.message.includes('Invalid API key')) {
-                        errorMsg = 'Invalid API key.<br><small>Tap ⚙️ to update it.</small>';
-                    }
-                    resultsContainer.innerHTML = `<div class="autocomplete-empty">${errorMsg}</div>`;
-                }
-            }, 300);
-        }
-
-        function selectFilm(movie) {
-            const movieYear = movie.release_date?.split('-')[0];
-            const isWrongYear = movieYear !== chosenYear;
-            
-            selectedFilm = {
+        function selectLocalFilm(movie) {
+            localState.selectedFilm = {
                 id: movie.id,
                 title: movie.title,
-                year: movieYear,
+                year: movie.release_date?.split('-')[0],
                 poster: movie.poster_path ? TMDB_IMG + movie.poster_path : null,
                 posterLarge: movie.poster_path ? TMDB_IMG_LARGE + movie.poster_path : null
             };
 
-            document.getElementById('selected-title').textContent = movie.title;
-            document.getElementById('selected-year').textContent = movieYear + (isWrongYear ? ' (not from ' + chosenYear + ')' : '');
-            document.getElementById('selected-poster').src = selectedFilm.poster || '';
-            document.getElementById('selected-poster').style.display = selectedFilm.poster ? 'block' : 'none';
+            document.getElementById('local-selected-title').textContent = movie.title;
+            document.getElementById('local-selected-year').textContent = localState.selectedFilm.year;
+            const poster = document.getElementById('local-selected-poster');
+            poster.src = localState.selectedFilm.poster || '';
+            poster.style.display = localState.selectedFilm.poster ? 'block' : 'none';
 
-            document.getElementById('selected-film-container').classList.remove('hidden');
-            document.getElementById('film-search-container').classList.add('hidden');
-            document.querySelector('.random-film-btn').classList.add('hidden');
-            document.getElementById('autocomplete-results').classList.remove('active');
-            document.getElementById('submit-film-btn').disabled = false;
+            document.getElementById('local-selected-film-container').classList.remove('hidden');
+            document.getElementById('local-film-search-container').classList.add('hidden');
+            document.getElementById('local-random-btn').classList.add('hidden');
+            document.getElementById('local-autocomplete-results').classList.remove('active');
+            document.getElementById('local-submit-film-btn').disabled = false;
         }
 
-        function clearSelection() {
-            selectedFilm = null;
-            document.getElementById('selected-film-container').classList.add('hidden');
-            document.getElementById('film-search-container').classList.remove('hidden');
-            document.querySelector('.random-film-btn').classList.remove('hidden');
-            document.getElementById('film-input').value = '';
-            document.getElementById('submit-film-btn').disabled = true;
+        function clearLocalSelection() {
+            localState.selectedFilm = null;
+            document.getElementById('local-selected-film-container').classList.add('hidden');
+            document.getElementById('local-film-search-container').classList.remove('hidden');
+            document.getElementById('local-random-btn').classList.remove('hidden');
+            document.getElementById('local-film-input').value = '';
+            document.getElementById('local-submit-film-btn').disabled = true;
         }
 
-        // Film Input Phase
-        function setupFilmInput() {
-            currentPlayer = 1;
-            document.getElementById('chosen-year-display').textContent = chosenYear;
-            document.getElementById('random-year-display').textContent = chosenYear;
+        async function getLocalRandomFilm() {
+            const btn = document.getElementById('local-random-btn');
+            btn.disabled = true;
+            btn.textContent = '🎲 Finding a film...';
             
-            const dotsContainer = document.getElementById('film-dots');
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < playerCount; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'player-dot' + (i === 0 ? ' current' : '');
-                dotsContainer.appendChild(dot);
+            try {
+                const movie = await fetchRandomFilm(localState.chosenYear);
+                selectLocalFilm(movie);
+            } catch (error) {
+                alert('Could not fetch a random film. Try searching manually.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🎲 Pick a random film';
             }
-            document.getElementById('current-film-player').textContent = '1';
-            clearSelection();
         }
 
-        function submitFilm() {
-            if (!selectedFilm) return;
-
-            films.push(selectedFilm);
+        function submitLocalFilm() {
+            if (!localState.selectedFilm) return;
             
-            const dots = document.querySelectorAll('#film-dots .player-dot');
-            dots[currentPlayer - 1].classList.remove('current');
-            dots[currentPlayer - 1].classList.add('done');
+            localState.films.push(localState.selectedFilm);
 
-            if (currentPlayer < playerCount) {
-                currentPlayer++;
-                showPassOverlay(currentPlayer);
+            if (localState.currentPlayer < localState.playerCount) {
+                localState.currentPlayer++;
+                showPassOverlay(`Player ${localState.currentPlayer}`, `Pick a film from ${localState.chosenYear}`);
             } else {
-                films = shuffleArray(films);
-                setupFilmDraw();
-                showScreen('filmDraw');
+                // All films collected, start draw
+                localState.shuffledFilms = shuffleArray([...localState.films]);
+                document.getElementById('local-drawn-films').innerHTML = '';
+                document.getElementById('local-film-hat').style.display = 'block';
+                document.getElementById('local-film-draw-subtitle').textContent = 'Tap the hat to draw';
+                showScreen('screen-local-film-draw');
             }
         }
 
-        // Film Draw Phase
-        function setupFilmDraw() {
-            document.getElementById('drawn-films').innerHTML = '';
-            document.getElementById('film-draw-subtitle').textContent = 'Tap the hat to draw';
-            document.getElementById('film-hat').style.pointerEvents = 'auto';
-            filmDrawIndex = 0;
-        }
+        function drawLocalFilm() {
+            if (localState.filmDrawIndex >= localState.shuffledFilms.length) return;
 
-        function drawFilm() {
-            if (filmDrawIndex >= films.length) return;
-
-            const container = document.getElementById('drawn-films');
-            const film = films[filmDrawIndex];
-            const isLast = filmDrawIndex === films.length - 1;
+            const container = document.getElementById('local-drawn-films');
+            const film = localState.shuffledFilms[localState.filmDrawIndex];
+            const isLast = localState.filmDrawIndex === localState.shuffledFilms.length - 1;
 
             const slip = document.createElement('div');
             slip.className = 'drawn-film-slip' + (isLast ? ' winner' : '');
@@ -1502,89 +1426,679 @@
                 setTimeout(() => slip.classList.add('discarded'), 400);
             }
 
-            filmDrawIndex++;
+            localState.filmDrawIndex++;
 
             if (isLast) {
-                chosenFilm = film;
-                document.getElementById('film-draw-subtitle').textContent = "You're watching " + film.title + '!';
-                document.getElementById('film-hat').style.pointerEvents = 'none';
-                
-                setTimeout(() => showResult(), 2000);
+                localState.chosenFilm = film;
+                document.getElementById('local-film-hat').style.display = 'none';
+                document.getElementById('local-film-draw-subtitle').textContent = `You're watching ${film.title}!`;
+
+                setTimeout(() => showResult(localState.chosenYear, localState.chosenFilm), 1500);
             }
         }
 
-        // Fetch Streaming Providers
-        async function fetchStreamingProviders(movieId) {
+        // ==================== ONLINE MODE STATE ====================
+        let onlineState = {
+            roomCode: null,
+            playerId: null,
+            playerName: null,
+            isHost: false,
+            gameRef: null,
+            selectedFilm: null
+        };
+
+        // ==================== ONLINE MODE FUNCTIONS ====================
+        async function createOnlineGame() {
+            const name = prompt('Enter your name:');
+            if (!name || !name.trim()) return;
+
             try {
-                const response = await fetch(
-                    `${TMDB_BASE}/movie/${movieId}/watch/providers?api_key=${API_KEY}`
-                );
-                const data = await response.json();
-                // Get UK providers (GB), fall back to US if not available
-                return data.results?.GB || data.results?.US || null;
+                await loadFirebase();
             } catch (error) {
-                console.error('Streaming providers error:', error);
-                return null;
+                alert('Could not connect. Check your internet connection.');
+                return;
+            }
+
+            gameMode = 'online';
+            onlineState.playerName = name.trim();
+            onlineState.playerId = generatePlayerId();
+            onlineState.isHost = true;
+            onlineState.roomCode = generateRoomCode();
+
+            const gameData = {
+                host: onlineState.playerId,
+                status: 'lobby',
+                players: {
+                    [onlineState.playerId]: {
+                        name: onlineState.playerName,
+                        isHost: true,
+                        yearSubmitted: false,
+                        filmSubmitted: false
+                    }
+                },
+                years: {},
+                films: {},
+                chosenYear: null,
+                chosenFilm: null,
+                drawState: { phase: null, currentIndex: 0, items: [] },
+                createdAt: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            try {
+                await db.ref('games/' + onlineState.roomCode).set(gameData);
+                setupOnlineListeners();
+                document.getElementById('lobby-room-code').textContent = onlineState.roomCode;
+                showScreen('screen-lobby');
+            } catch (error) {
+                console.error('Error creating game:', error);
+                alert('Failed to create game. Please try again.');
             }
         }
 
-        // Result
-        async function showResult() {
-            document.getElementById('final-year').textContent = chosenYear;
-            document.getElementById('final-film').textContent = chosenFilm.title;
+        async function joinOnlineGame() {
+            const code = document.getElementById('join-code-input').value.trim().toUpperCase();
+            const name = document.getElementById('join-name-input').value.trim();
+            const errorEl = document.getElementById('join-error');
+
+            if (!code || code.length !== 4) {
+                errorEl.textContent = 'Please enter a 4-letter room code';
+                errorEl.classList.add('visible');
+                return;
+            }
+
+            if (!name) {
+                errorEl.textContent = 'Please enter your name';
+                errorEl.classList.add('visible');
+                return;
+            }
+
+            try {
+                await loadFirebase();
+            } catch (error) {
+                errorEl.textContent = 'Could not connect. Check your internet.';
+                errorEl.classList.add('visible');
+                return;
+            }
+
+            try {
+                const snapshot = await db.ref('games/' + code).once('value');
+                if (!snapshot.exists()) {
+                    errorEl.textContent = 'Room not found';
+                    errorEl.classList.add('visible');
+                    return;
+                }
+
+                const gameData = snapshot.val();
+                if (gameData.status !== 'lobby') {
+                    errorEl.textContent = 'Game already in progress';
+                    errorEl.classList.add('visible');
+                    return;
+                }
+
+                gameMode = 'online';
+                onlineState.playerName = name;
+                onlineState.playerId = generatePlayerId();
+                onlineState.isHost = false;
+                onlineState.roomCode = code;
+
+                await db.ref('games/' + code + '/players/' + onlineState.playerId).set({
+                    name: onlineState.playerName,
+                    isHost: false,
+                    yearSubmitted: false,
+                    filmSubmitted: false
+                });
+
+                setupOnlineListeners();
+                document.getElementById('lobby-room-code').textContent = onlineState.roomCode;
+                showScreen('screen-lobby');
+
+            } catch (error) {
+                console.error('Error joining game:', error);
+                errorEl.textContent = 'Failed to join game';
+                errorEl.classList.add('visible');
+            }
+        }
+
+        function setupOnlineListeners() {
+            onlineState.gameRef = db.ref('games/' + onlineState.roomCode);
+
+            onlineState.gameRef.on('value', (snapshot) => {
+                if (!snapshot.exists()) {
+                    alert('Game ended');
+                    leaveOnlineGame();
+                    return;
+                }
+                handleOnlineUpdate(snapshot.val());
+            });
+
+            onlineState.gameRef.child('players/' + onlineState.playerId).onDisconnect().remove();
+        }
+
+        function handleOnlineUpdate(game) {
+            updateOnlinePlayersList(game.players);
+
+            switch (game.status) {
+                case 'lobby':
+                    // Stay on lobby
+                    break;
+                case 'yearInput':
+                    handleOnlineYearInput(game);
+                    break;
+                case 'yearDraw':
+                    handleOnlineYearDraw(game);
+                    break;
+                case 'filmInput':
+                    handleOnlineFilmInput(game);
+                    break;
+                case 'filmDraw':
+                    handleOnlineFilmDraw(game);
+                    break;
+                case 'result':
+                    showResult(game.chosenYear, game.chosenFilm);
+                    break;
+            }
+        }
+
+        function updateOnlinePlayersList(players) {
+            const containers = ['players-list', 'year-players-status', 'film-players-status'];
+            
+            containers.forEach(containerId => {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                container.innerHTML = Object.entries(players).map(([id, player]) => {
+                    const isYou = id === onlineState.playerId;
+                    let status = '';
+                    
+                    if (player.isHost) status = '<span class="player-status host">Host</span>';
+                    else if (player.yearSubmitted && containerId === 'year-players-status') status = '<span class="player-status ready">✓</span>';
+                    else if (player.filmSubmitted && containerId === 'film-players-status') status = '<span class="player-status ready">✓</span>';
+
+                    return `
+                        <div class="player-item ${isYou ? 'you' : ''}">
+                            <div class="player-avatar">${player.name.charAt(0).toUpperCase()}</div>
+                            <span class="player-name">${player.name}${isYou ? ' (You)' : ''}</span>
+                            ${status}
+                        </div>
+                    `;
+                }).join('');
+            });
+
+            if (onlineState.isHost) {
+                const playerCount = Object.keys(players).length;
+                const startBtn = document.getElementById('start-game-btn');
+                startBtn.disabled = playerCount < 2;
+                document.getElementById('waiting-text').textContent = 
+                    playerCount < 2 ? 'Need at least 2 players' : `${playerCount} players ready`;
+            }
+        }
+
+        async function startOnlineGame() {
+            if (!onlineState.isHost) return;
+            await onlineState.gameRef.update({ status: 'yearInput' });
+        }
+
+        function handleOnlineYearInput(game) {
+            const myPlayer = game.players[onlineState.playerId];
+            
+            if (myPlayer.yearSubmitted) {
+                showScreen('screen-online-year-wait');
+            } else {
+                document.getElementById('online-year-input').value = '';
+                showScreen('screen-online-year');
+            }
+
+            const allSubmitted = Object.values(game.players).every(p => p.yearSubmitted);
+            if (allSubmitted && onlineState.isHost) {
+                const years = Object.values(game.years);
+                const shuffled = shuffleArray(years);
+                
+                onlineState.gameRef.update({
+                    status: 'yearDraw',
+                    drawState: { phase: 'years', currentIndex: 0, items: shuffled }
+                });
+            }
+        }
+
+        async function submitOnlineYear() {
+            const input = document.getElementById('online-year-input');
+            const yearValue = input.value.trim();
+            const year = parseInt(yearValue, 10);
+            const currentYear = new Date().getFullYear();
+
+            if (!yearValue || yearValue.length !== 4 || isNaN(year) || year < 1900 || year > currentYear) {
+                document.getElementById('online-year-error').classList.add('visible');
+                return;
+            }
+
+            document.getElementById('online-year-error').classList.remove('visible');
+
+            await onlineState.gameRef.child('years/' + onlineState.playerId).set(yearValue);
+            await onlineState.gameRef.child('players/' + onlineState.playerId + '/yearSubmitted').set(true);
+        }
+
+        function handleOnlineYearDraw(game) {
+            showScreen('screen-online-year-draw');
+            
+            const drawState = game.drawState;
+            const container = document.getElementById('online-drawn-years');
+            
+            container.innerHTML = '';
+            for (let i = 0; i < drawState.currentIndex; i++) {
+                const isLast = i === drawState.items.length - 1 && drawState.currentIndex === drawState.items.length;
+                const slip = document.createElement('div');
+                slip.className = 'drawn-slip' + (isLast ? ' winner' : ' discarded');
+                slip.style.setProperty('--rotation', getRandomRotation() + 'deg');
+                slip.textContent = drawState.items[i];
+                container.appendChild(slip);
+            }
+
+            const hatEl = document.getElementById('online-year-hat');
+            const waitingEl = document.getElementById('online-year-draw-waiting');
+            
+            if (drawState.currentIndex >= drawState.items.length) {
+                hatEl.style.display = 'none';
+                document.getElementById('online-year-draw-subtitle').textContent = 'The year is ' + game.chosenYear + '!';
+            } else {
+                hatEl.style.display = 'block';
+                if (onlineState.isHost) {
+                    hatEl.style.pointerEvents = 'auto';
+                    waitingEl.classList.add('hidden');
+                } else {
+                    hatEl.style.pointerEvents = 'none';
+                    waitingEl.classList.remove('hidden');
+                }
+            }
+        }
+
+        async function drawOnlineYear() {
+            if (!onlineState.isHost) return;
+
+            const snapshot = await onlineState.gameRef.once('value');
+            const game = snapshot.val();
+            const drawState = game.drawState;
+
+            if (drawState.currentIndex >= drawState.items.length) return;
+
+            const newIndex = drawState.currentIndex + 1;
+            const isLast = newIndex >= drawState.items.length;
+
+            const updates = { 'drawState/currentIndex': newIndex };
+
+            if (isLast) {
+                updates.chosenYear = drawState.items[drawState.items.length - 1];
+                
+                setTimeout(async () => {
+                    const players = game.players;
+                    const resetUpdates = {};
+                    Object.keys(players).forEach(id => {
+                        resetUpdates['players/' + id + '/filmSubmitted'] = false;
+                    });
+                    resetUpdates.status = 'filmInput';
+                    await onlineState.gameRef.update(resetUpdates);
+                }, 2000);
+            }
+
+            await onlineState.gameRef.update(updates);
+        }
+
+        function handleOnlineFilmInput(game) {
+            const myPlayer = game.players[onlineState.playerId];
+            
+            document.getElementById('online-chosen-year').textContent = game.chosenYear;
+
+            if (myPlayer.filmSubmitted) {
+                showScreen('screen-online-film-wait');
+            } else {
+                clearOnlineSelection();
+                showScreen('screen-online-film');
+            }
+
+            const allSubmitted = Object.values(game.players).every(p => p.filmSubmitted);
+            if (allSubmitted && onlineState.isHost) {
+                const films = Object.values(game.films);
+                const shuffled = shuffleArray(films);
+                
+                onlineState.gameRef.update({
+                    status: 'filmDraw',
+                    drawState: { phase: 'films', currentIndex: 0, items: shuffled }
+                });
+            }
+        }
+
+        // Film search for online mode
+        document.getElementById('online-film-input').addEventListener('input', async function(e) {
+            const snapshot = await onlineState.gameRef.once('value');
+            const chosenYear = snapshot.val().chosenYear;
+            handleFilmSearch(e.target.value, 'online-autocomplete-results', chosenYear, selectOnlineFilm);
+        });
+
+        function selectOnlineFilm(movie) {
+            onlineState.selectedFilm = {
+                id: movie.id,
+                title: movie.title,
+                year: movie.release_date?.split('-')[0],
+                poster: movie.poster_path ? TMDB_IMG + movie.poster_path : null,
+                posterLarge: movie.poster_path ? TMDB_IMG_LARGE + movie.poster_path : null
+            };
+
+            document.getElementById('online-selected-title').textContent = movie.title;
+            document.getElementById('online-selected-year').textContent = onlineState.selectedFilm.year;
+            const poster = document.getElementById('online-selected-poster');
+            poster.src = onlineState.selectedFilm.poster || '';
+            poster.style.display = onlineState.selectedFilm.poster ? 'block' : 'none';
+
+            document.getElementById('online-selected-film-container').classList.remove('hidden');
+            document.getElementById('online-film-search-container').classList.add('hidden');
+            document.getElementById('online-random-btn').classList.add('hidden');
+            document.getElementById('online-autocomplete-results').classList.remove('active');
+            document.getElementById('online-submit-film-btn').disabled = false;
+        }
+
+        function clearOnlineSelection() {
+            onlineState.selectedFilm = null;
+            document.getElementById('online-selected-film-container').classList.add('hidden');
+            document.getElementById('online-film-search-container').classList.remove('hidden');
+            document.getElementById('online-random-btn').classList.remove('hidden');
+            document.getElementById('online-film-input').value = '';
+            document.getElementById('online-submit-film-btn').disabled = true;
+        }
+
+        async function getOnlineRandomFilm() {
+            const btn = document.getElementById('online-random-btn');
+            btn.disabled = true;
+            btn.textContent = '🎲 Finding a film...';
+            
+            try {
+                const snapshot = await onlineState.gameRef.once('value');
+                const chosenYear = snapshot.val().chosenYear;
+                const movie = await fetchRandomFilm(chosenYear);
+                selectOnlineFilm(movie);
+            } catch (error) {
+                alert('Could not fetch a random film. Try searching manually.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🎲 Pick a random film';
+            }
+        }
+
+        async function submitOnlineFilm() {
+            if (!onlineState.selectedFilm) return;
+
+            await onlineState.gameRef.child('films/' + onlineState.playerId).set(onlineState.selectedFilm);
+            await onlineState.gameRef.child('players/' + onlineState.playerId + '/filmSubmitted').set(true);
+        }
+
+        function handleOnlineFilmDraw(game) {
+            showScreen('screen-online-film-draw');
+            
+            const drawState = game.drawState;
+            const container = document.getElementById('online-drawn-films');
+            
+            container.innerHTML = '';
+            for (let i = 0; i < drawState.currentIndex; i++) {
+                const film = drawState.items[i];
+                const isLast = i === drawState.items.length - 1 && drawState.currentIndex === drawState.items.length;
+                const slip = document.createElement('div');
+                slip.className = 'drawn-film-slip' + (isLast ? ' winner' : ' discarded');
+                slip.style.setProperty('--rotation', getRandomRotation() + 'deg');
+                slip.innerHTML = `
+                    ${film.poster ? `<img class="drawn-film-poster" src="${film.poster}" alt="">` : ''}
+                    <span class="drawn-film-title">${film.title}</span>
+                `;
+                container.appendChild(slip);
+            }
+
+            const hatEl = document.getElementById('online-film-hat');
+            const waitingEl = document.getElementById('online-film-draw-waiting');
+            
+            if (drawState.currentIndex >= drawState.items.length) {
+                hatEl.style.display = 'none';
+                document.getElementById('online-film-draw-subtitle').textContent = "You're watching " + game.chosenFilm.title + '!';
+            } else {
+                hatEl.style.display = 'block';
+                if (onlineState.isHost) {
+                    hatEl.style.pointerEvents = 'auto';
+                    waitingEl.classList.add('hidden');
+                } else {
+                    hatEl.style.pointerEvents = 'none';
+                    waitingEl.classList.remove('hidden');
+                }
+            }
+        }
+
+        async function drawOnlineFilm() {
+            if (!onlineState.isHost) return;
+
+            const snapshot = await onlineState.gameRef.once('value');
+            const game = snapshot.val();
+            const drawState = game.drawState;
+
+            if (drawState.currentIndex >= drawState.items.length) return;
+
+            const newIndex = drawState.currentIndex + 1;
+            const isLast = newIndex >= drawState.items.length;
+
+            const updates = { 'drawState/currentIndex': newIndex };
+
+            if (isLast) {
+                updates.chosenFilm = drawState.items[drawState.items.length - 1];
+                updates.status = 'result';
+            }
+
+            await onlineState.gameRef.update(updates);
+        }
+
+        function leaveOnlineGame() {
+            if (onlineState.gameRef) {
+                onlineState.gameRef.off();
+                if (onlineState.playerId) {
+                    db.ref('games/' + onlineState.roomCode + '/players/' + onlineState.playerId).remove();
+                }
+            }
+            
+            onlineState = { roomCode: null, playerId: null, playerName: null, isHost: false, gameRef: null, selectedFilm: null };
+            gameMode = null;
+            showScreen('screen-home');
+        }
+
+        // ==================== SHARED FUNCTIONS ====================
+        function showResult(year, film) {
+            document.getElementById('final-year').textContent = year;
+            document.getElementById('final-film').textContent = film.title;
             
             const poster = document.getElementById('final-poster');
-            if (chosenFilm.posterLarge) {
-                poster.src = chosenFilm.posterLarge;
+            if (film.posterLarge || film.poster) {
+                poster.src = film.posterLarge || film.poster;
                 poster.style.display = 'block';
             } else {
                 poster.style.display = 'none';
             }
-            
-            showScreen('result');
+
+            showScreen('screen-result');
             launchConfetti();
+            fetchStreamingProviders(film.id);
+        }
 
-            // Fetch streaming providers
-            const providersContainer = document.getElementById('streaming-providers');
-            providersContainer.innerHTML = '<span class="no-streaming">Checking availability...</span>';
-
-            const providers = await fetchStreamingProviders(chosenFilm.id);
+        async function fetchStreamingProviders(movieId) {
+            const container = document.getElementById('streaming-providers');
             
-            if (providers) {
-                const allProviders = [
-                    ...(providers.flatrate || []),  // Subscription
-                    ...(providers.rent || []),       // Rent
-                    ...(providers.buy || [])         // Buy
-                ];
-                
-                // Remove duplicates by provider_id
-                const uniqueProviders = allProviders.filter((provider, index, self) =>
-                    index === self.findIndex(p => p.provider_id === provider.provider_id)
-                ).slice(0, 8);
+            try {
+                const response = await fetch(`${TMDB_BASE}/movie/${movieId}/watch/providers?api_key=${TMDB_API_KEY}`);
+                const data = await response.json();
+                const providers = data.results?.GB || data.results?.US;
 
-                if (uniqueProviders.length > 0) {
-                    providersContainer.innerHTML = uniqueProviders.map(provider => `
-                        <div class="provider-link">
+                if (providers) {
+                    const allProviders = [
+                        ...(providers.flatrate || []),
+                        ...(providers.rent || []),
+                        ...(providers.buy || [])
+                    ];
+                    
+                    const unique = allProviders.filter((p, i, arr) => 
+                        i === arr.findIndex(x => x.provider_id === p.provider_id)
+                    ).slice(0, 8);
+
+                    if (unique.length > 0) {
+                        container.innerHTML = unique.map(p => `
                             <img class="provider-logo" 
-                                 src="https://image.tmdb.org/t/p/original${provider.logo_path}" 
-                                 alt="${provider.provider_name}"
-                                 title="${provider.provider_name}">
-                            <span class="provider-name">${provider.provider_name}</span>
-                        </div>
-                    `).join('');
-                } else {
-                    providersContainer.innerHTML = '<span class="no-streaming">No streaming options found</span>';
+                                 src="https://image.tmdb.org/t/p/original${p.logo_path}" 
+                                 alt="${p.provider_name}"
+                                 title="${p.provider_name}">
+                        `).join('');
+                        return;
+                    }
                 }
-            } else {
-                providersContainer.innerHTML = '<span class="no-streaming">Streaming info unavailable</span>';
+                container.innerHTML = '<span class="no-streaming">No streaming info available</span>';
+            } catch {
+                container.innerHTML = '<span class="no-streaming">Could not load streaming info</span>';
             }
         }
 
-        function resetGame() {
-            showScreen('welcome');
+        async function playAgain() {
+            if (gameMode === 'local') {
+                localState.currentPlayer = 1;
+                localState.years = [];
+                localState.films = [];
+                localState.chosenYear = null;
+                localState.chosenFilm = null;
+                localState.selectedFilm = null;
+                localState.yearDrawIndex = 0;
+                localState.filmDrawIndex = 0;
+                showPassOverlay('Player 1', 'Enter your year when ready');
+            } else if (gameMode === 'online') {
+                if (!onlineState.isHost) {
+                    alert('Only the host can start a new game');
+                    return;
+                }
+
+                const snapshot = await onlineState.gameRef.once('value');
+                const players = snapshot.val().players;
+                
+                const resetUpdates = {
+                    status: 'lobby',
+                    years: {},
+                    films: {},
+                    chosenYear: null,
+                    chosenFilm: null,
+                    drawState: { phase: null, currentIndex: 0, items: [] }
+                };
+
+                Object.keys(players).forEach(id => {
+                    resetUpdates['players/' + id + '/yearSubmitted'] = false;
+                    resetUpdates['players/' + id + '/filmSubmitted'] = false;
+                });
+
+                await onlineState.gameRef.update(resetUpdates);
+                showScreen('screen-lobby');
+            }
         }
 
-        // Confetti Effect
+        function exitGame() {
+            if (gameMode === 'online') {
+                leaveOnlineGame();
+            } else {
+                gameMode = null;
+                showScreen('screen-home');
+            }
+        }
+
+        // ==================== UTILITIES ====================
+        function generateRoomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+            let code = '';
+            for (let i = 0; i < 4; i++) {
+                code += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return code;
+        }
+
+        function generatePlayerId() {
+            return 'player_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function getRandomRotation() {
+            return (Math.random() - 0.5) * 10;
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        async function handleFilmSearch(query, resultsContainerId, year, selectCallback) {
+            const resultsContainer = document.getElementById(resultsContainerId);
+            query = query.trim();
+
+            if (query.length < 2) {
+                resultsContainer.classList.remove('active');
+                return;
+            }
+
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(async () => {
+                resultsContainer.innerHTML = '<div class="autocomplete-loading">Searching...</div>';
+                resultsContainer.classList.add('active');
+
+                try {
+                    const url = `${TMDB_BASE}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`;
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Search failed');
+                    const data = await response.json();
+                    
+                    const yearFilms = data.results.filter(m => m.release_date?.startsWith(year));
+                    const results = yearFilms.length > 0 ? yearFilms.slice(0, 10) : data.results.slice(0, 10);
+
+                    if (results.length === 0) {
+                        resultsContainer.innerHTML = '<div class="autocomplete-empty">No films found</div>';
+                        return;
+                    }
+
+                    resultsContainer.innerHTML = results.map(movie => {
+                        const movieYear = movie.release_date?.split('-')[0] || '?';
+                        return `
+                            <div class="autocomplete-item" data-movie='${JSON.stringify(movie).replace(/'/g, "&#39;")}'>
+                                <img class="autocomplete-poster" 
+                                     src="${movie.poster_path ? TMDB_IMG + movie.poster_path : ''}" 
+                                     alt=""
+                                     onerror="this.style.display='none'">
+                                <div class="autocomplete-info">
+                                    <div class="autocomplete-title">${movie.title}</div>
+                                    <div class="autocomplete-year">${movieYear}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    resultsContainer.querySelectorAll('.autocomplete-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const movie = JSON.parse(item.dataset.movie);
+                            selectCallback(movie);
+                        });
+                    });
+                } catch (error) {
+                    resultsContainer.innerHTML = '<div class="autocomplete-empty">Search failed</div>';
+                }
+            }, 300);
+        }
+
+        async function fetchRandomFilm(year) {
+            const randomPage = Math.floor(Math.random() * 5) + 1;
+            const url = `${TMDB_BASE}/discover/movie?api_key=${TMDB_API_KEY}&primary_release_year=${year}&sort_by=popularity.desc&page=${randomPage}`;
+            
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Failed');
+            
+            const data = await response.json();
+            if (!data.results?.length) throw new Error('No films');
+            
+            return data.results[Math.floor(Math.random() * data.results.length)];
+        }
+
         function launchConfetti() {
             const canvas = document.getElementById('confetti');
             const ctx = canvas.getContext('2d');
@@ -1629,74 +2143,22 @@
                 });
 
                 frame++;
-                if (active) {
-                    requestAnimationFrame(animate);
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
+                if (active) requestAnimationFrame(animate);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
 
             animate();
         }
 
-        // Keyboard support - only submit if valid input exists and no overlay showing
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                // Don't do anything if pass overlay is showing
-                const passOverlay = document.getElementById('pass-overlay');
-                if (passOverlay.classList.contains('active')) {
-                    e.preventDefault();
-                    return;
-                }
-                
-                e.preventDefault(); // Stop any default form behavior
-                
-                if (screens.yearInput.classList.contains('active')) {
-                    const yearInput = document.getElementById('year-input');
-                    const yearValue = yearInput.value.trim();
-                    const year = parseInt(yearValue, 10);
-                    // Only submit if we have a valid 4-digit year
-                    if (yearValue.length === 4 && !isNaN(year) && year >= 1900 && year <= new Date().getFullYear()) {
-                        submitYear();
-                    }
-                } else if (screens.filmInput.classList.contains('active') && selectedFilm) {
-                    submitFilm();
-                }
+        // Close autocomplete when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.film-search-container')) {
+                document.querySelectorAll('.autocomplete-results').forEach(r => r.classList.remove('active'));
             }
         });
 
-        // Settings
-        function toggleSettings() {
-            const panel = document.getElementById('settings-panel');
-            const input = document.getElementById('settings-api-key');
-            
-            if (panel.classList.contains('active')) {
-                panel.classList.remove('active');
-            } else {
-                input.value = API_KEY;
-                panel.classList.add('active');
-            }
-        }
-
-        function saveSettings() {
-            const input = document.getElementById('settings-api-key');
-            const newKey = input.value.trim();
-            
-            if (newKey) {
-                API_KEY = newKey;
-                localStorage.setItem('hatgame_api_key', newKey);
-            } else {
-                // Reset to default
-                API_KEY = DEFAULT_API_KEY;
-                localStorage.removeItem('hatgame_api_key');
-            }
-            
-            toggleSettings();
-            alert('API key saved! Try searching for a film to test it.');
-        }
-
-        // Start
-        init();
+        // Initialize
+        showScreen('screen-home');
     </script>
 </body>
 </html>
