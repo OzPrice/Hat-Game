@@ -336,6 +336,32 @@
             cursor: not-allowed;
         }
 
+        .random-film-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-top: 0.75rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--ink);
+            background: rgba(45, 37, 32, 0.05);
+            border: 2px dashed rgba(45, 37, 32, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .random-film-btn:hover {
+            background: rgba(196, 93, 58, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .random-film-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .film-search-container {
             position: relative;
             width: 100%;
@@ -974,6 +1000,8 @@
                     <div class="autocomplete-results" id="autocomplete-results"></div>
                 </div>
 
+                <button class="random-film-btn" onclick="getRandomFilm()">🎲 Pick a random film from <span id="random-year-display"></span></button>
+
                 <button class="submit-input" id="submit-film-btn" onclick="submitFilm()" disabled>Drop in hat</button>
             </div>
         </div>
@@ -1286,6 +1314,47 @@
             }
         }
 
+        // Get a random popular film from the chosen year
+        async function getRandomFilm() {
+            const btn = document.querySelector('.random-film-btn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '🎲 Finding a film...';
+            
+            try {
+                // Get a random page (1-5) of popular films from that year
+                const randomPage = Math.floor(Math.random() * 5) + 1;
+                const url = `${TMDB_BASE}/discover/movie?api_key=${API_KEY}&primary_release_year=${chosenYear}&sort_by=popularity.desc&page=${randomPage}`;
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch films');
+                }
+                
+                const data = await response.json();
+                
+                if (!data.results || data.results.length === 0) {
+                    alert('No films found for ' + chosenYear + '. Try searching manually.');
+                    return;
+                }
+                
+                // Pick a random film from the results
+                const randomIndex = Math.floor(Math.random() * data.results.length);
+                const randomMovie = data.results[randomIndex];
+                
+                // Select it
+                selectFilm(randomMovie);
+                
+            } catch (error) {
+                console.error('Random film error:', error);
+                alert('Could not fetch a random film. Try searching manually.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
         function handleFilmSearch(e) {
             const query = e.target.value.trim();
             const resultsContainer = document.getElementById('autocomplete-results');
@@ -1355,6 +1424,7 @@
 
             document.getElementById('selected-film-container').classList.remove('hidden');
             document.getElementById('film-search-container').classList.add('hidden');
+            document.querySelector('.random-film-btn').classList.add('hidden');
             document.getElementById('autocomplete-results').classList.remove('active');
             document.getElementById('submit-film-btn').disabled = false;
         }
@@ -1363,6 +1433,7 @@
             selectedFilm = null;
             document.getElementById('selected-film-container').classList.add('hidden');
             document.getElementById('film-search-container').classList.remove('hidden');
+            document.querySelector('.random-film-btn').classList.remove('hidden');
             document.getElementById('film-input').value = '';
             document.getElementById('submit-film-btn').disabled = true;
         }
@@ -1371,6 +1442,7 @@
         function setupFilmInput() {
             currentPlayer = 1;
             document.getElementById('chosen-year-display').textContent = chosenYear;
+            document.getElementById('random-year-display').textContent = chosenYear;
             
             const dotsContainer = document.getElementById('film-dots');
             dotsContainer.innerHTML = '';
@@ -1567,9 +1639,16 @@
             animate();
         }
 
-        // Keyboard support - only submit if valid input exists
+        // Keyboard support - only submit if valid input exists and no overlay showing
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                // Don't do anything if pass overlay is showing
+                const passOverlay = document.getElementById('pass-overlay');
+                if (passOverlay.classList.contains('active')) {
+                    e.preventDefault();
+                    return;
+                }
+                
                 e.preventDefault(); // Stop any default form behavior
                 
                 if (screens.yearInput.classList.contains('active')) {
